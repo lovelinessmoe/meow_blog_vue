@@ -1,30 +1,21 @@
 <template>
+    <TopBar></TopBar>
     <router-view></router-view>
 </template>
 
 <script>
-
+    import TopBar from "@/components/TopBar";
 
     export default {
-        name: 'App',
+        name: "BlogPage",
+        components: {TopBar},
         data() {
             return {}
         },
         methods: {}
-
     }
 </script>
 
-<style>
-    #app {
-        text-align: center;
-    }
+<style scoped>
 
-    body {
-        margin: 0;
-    }
-
-    html, body, #app {
-        height: 100%;
-    }
 </style>
