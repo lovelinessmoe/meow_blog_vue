@@ -1,4 +1,6 @@
 import {createRouter, createWebHashHistory} from "vue-router";
+import {getUserAuth} from "@/utils/token";
+import {ElNotification} from 'element-plus'
 
 const routes = [
     {path: '/', redirect: '/blog'},
@@ -6,6 +8,7 @@ const routes = [
     {
         path: '/blog/', component: () => import('@/views/BlogPage.vue'),
         children: [
+            {path: '', redirect: '/blog/home'},
             {path: 'home', component: () => import('@/views/Home.vue')},
             {path: 'classification', component: () => import('@/views/Classification.vue')},
             {path: 'about', component: () => import('@/views/About.vue')},
@@ -15,8 +18,26 @@ const routes = [
     },
     {path: '/login', component: () => import('@/components/Login.vue')},
     {path: '/logout', redirect: '/blog/home'},
-    {path: '/backstage', component: () => import('@/views/Backstage')},
-
+    {
+        path: '/backstage/', component: () => import('@/views/Backstage'),
+        beforeEnter: () => {
+            let userAuth = getUserAuth();
+            if (userAuth === undefined || userAuth !== 'ROLE_ADMIN') {
+                ElNotification({
+                    message: '用户权限不足',
+                    type: 'error'
+                })
+                return {path: '/'}
+            }
+        },
+        children: [
+            {path: '', redirect: '/backstage/home'},
+            {path: 'home', component: () => import('@/views/Backstage/BackHomePage')},
+            {path: 'userMan', component: () => import('@/views/Backstage/UserMan')},
+            {path: 'articleMan', component: () => import('@/views/Backstage/ArticleMan')},
+            {path: 'addArticle', component: () => import('@/views/Backstage/AddArticle')},
+        ]
+    },
 ]
 
 const router = createRouter({

@@ -1,5 +1,6 @@
 <template>
     <el-menu
+            style="width: 100%"
             router="true"
             class="el-menu-demo"
             mode="horizontal"
@@ -52,7 +53,7 @@
 </template>
 
 <script>
-    import {getUser, getToken, removeToken, removeUser} from '@/utils/token'
+    import {getUser, getToken, removeToken, removeUser, getUserAuth} from '@/utils/token'
     import {logout} from "@/api/login";
 
     export default {
@@ -66,9 +67,9 @@
         },
         methods: {
             async Auth() {
-                let user = getUser()
-                console.dir(user)
-                if (user === undefined || user.data.authorities[0].authority !== 'ROLE_ADMIN') {
+                let userAuth = getUserAuth()
+                console.log(userAuth)
+                if (userAuth === undefined || userAuth !== 'ROLE_ADMIN') {
                     this.Auth_show = false
                 } else {
                     this.Auth_show = true

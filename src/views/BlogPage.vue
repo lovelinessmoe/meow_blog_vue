@@ -1,5 +1,7 @@
 <template>
-    <TopBar></TopBar>
+    <el-affix>
+        <TopBar/>
+    </el-affix>
     <router-view></router-view>
 </template>
 

@@ -1,9 +1,9 @@
 <template>
     <!--登录表单的容器-->
-    <div class="login_container">
-        <div class="avatar_box">
+    <div class="login_container" :style="login_container">
+        <!--<div class="avatar_box">
             <img src="src/assets/img/logo.png">
-        </div>
+        </div>-->
         <!--登录区域-->
         <div class="login_box">
             <el-form :model="loginForm" :rules="loginRules" ref="loginForm" label-width="0px" class="login_form">
@@ -62,6 +62,11 @@
         name: "LoginComponent",
         data() {
             return {
+                login_container: {
+                    backgroundImage: 'url(' + require('@/assets/img/login_back.jpg') + ')',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: 'cover'
+                },
                 type: "login",
                 loginForm: {
                     userName: 'love',
@@ -182,16 +187,17 @@
 
 <style lang="less" scoped>
     .login_container {
+        height: 100%;
     }
 
     .login_box {
-        width: 450px;
-        height: 380px;
-        background-color: #FFFFFF;
-        border-radius: 3px;
+        padding: 20px;
+        background-color: whitesmoke;
+        width: 300px;
+        border-radius: 8px;
         position: absolute;
-        left: 50%;
-        top: 60%;
+        left: 18%;
+        top: 45%;
         transform: translate(-50%, -50%);
 
         .login_form {

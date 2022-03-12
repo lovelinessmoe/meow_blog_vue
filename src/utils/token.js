@@ -20,6 +20,16 @@ export function getUser() {
     return user
 }
 
+export function getUserAuth() {
+    let userAuth = undefined
+    try {
+        userAuth = JSON.parse(localStorage.user).data.authorities[0].authority
+    } catch (e) {
+        console.log('用户未登陆')
+    }
+    return userAuth
+}
+
 export function setUser(user) {
     return localStorage.user = JSON.stringify(user)
 }
