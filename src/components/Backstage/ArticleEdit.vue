@@ -1,10 +1,4 @@
 <template>
-    <!--<quill-editor ref="quillEditor"
-                  v-model="blogForm.content"
-                  :options="editorOption"
-                  @blur="onEditorBlur($event)"
-                  @focus="onEditorFocus($event)"
-                  @ready="onEditorReady($event)"></quill-editor>-->
     <el-form :model="formData" ref="vForm" :rules="rules" label-position="left" label-width="80px"
              size="default" @submit.prevent style="height: 100%">
         <el-card class="box-card" style="height: 100%" shadow="always" body-style="height: 100%">
@@ -32,25 +26,33 @@
                 </div>
             </template>
 
-            <QuillEditor style="height: 60%"
+            <QuillEditor ref="myEditor"
+                         style="height: 60%"
                          theme="snow"
-                         v-model="blogForm.articleContent"
                          :options="editorOption"
-                         @update:content="onContentChange($event)"/>
+                         @ready="editReady(quill)"
+            />
+            <!--                         @update:content="onContentChange($event)"-->
+            <!--                         contentType="html"-->
+            <!--                         v-model:content="blogForm.articleContent"-->
+            <!--            {{quill.getHTML()}}-->
+            <el-button type="primary" @click="submitForm()">保存</el-button>
         </el-card>
-        <el-button type="primary" @click="submitForm()">添加</el-button>
     </el-form>
 </template>
 
 <script>
     import {QuillEditor} from '@vueup/vue-quill'
     import '@vueup/vue-quill/dist/vue-quill.snow.css';
-    import {addArticle} from "@/api/Backstage/article";
+    import {saveOrUpdateArticle, getDetail} from "@/api/Backstage/article";
     import {ElNotification} from 'element-plus'
 
     export default {
-        name: "AddArticle",
+        name: "ArticleEdit",
         components: {QuillEditor},
+        props: ['articleId'],
+        created() {
+        },
         data() {
             return {
                 blogForm: {
@@ -101,8 +103,12 @@
             }
         },
         methods: {
+            async editReady() {
+                await this.getArticleDetail();
+            },
             async submitForm() {
-                const res = await addArticle(this.blogForm)
+                this.blogForm.articleContent = this.$refs.myEditor.getHTML();
+                const res = await saveOrUpdateArticle(this.blogForm)
                 if (res.success) {
                     ElNotification({
                         message: '添加成功',
@@ -113,8 +119,14 @@
             onContentChange(content) {
                 this.blogForm.articleContent = content
             },
+            async getArticleDetail() {
+                if (this.articleId !== undefined) {
+                    let res = await getDetail(this.articleId)
+                    this.blogForm = res.data;
+                    this.$refs.myEditor.setHTML(this.blogForm.articleContent)
+                }
+            },
         },
-
     }
 </script>
 

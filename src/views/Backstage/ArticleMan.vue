@@ -17,19 +17,44 @@
             @size-change="sizeChange"
             @refresh-change="refreshChange"
             @on-load="onLoad">
-        <template #articleContentForm="{type,disabled}">
-            <el-tag>窗口类型:{{type=='add'?'新增':'修改'}}</el-tag>
-            <el-tag>{{form.articleContent?form.articleContent:'暂时没有内容'}}</el-tag>
-            <el-input :disabled="disabled" v-model="form.articleContent"></el-input>
+
+        <template #menu-left="">
+            <el-button type="danger"
+                       icon="el-icon-plus"
+                       size="small"
+                       plain
+                       @click.stop="addRow()">新增
+            </el-button>
+        </template>
+
+        <template #menu="{row,index}">
+            <el-button type="text"
+                       icon="el-icon-edit"
+                       size="default"
+                       plain
+                       @click.stop="editRow(row,index)">编辑
+            </el-button>
+            <el-button type="text"
+                       icon="el-icon-view"
+                       size="default"
+                       plain
+                       @click.stop="$refs.crud.rowView(row,index)">查看
+            </el-button>
         </template>
     </avue-crud>
+    <el-button type="danger" @click="editVisible=false" v-if="editVisible">Close</el-button>
+    <ArticleEdit v-bind:articleId="form.articleId" v-if="editVisible"/>
 </template>
 
 <script>
+    import '@vueup/vue-quill/dist/vue-quill.snow.css';
     import {add, update, remove, getList, getDetail} from "@/api/Backstage/article";
+    import ArticleEdit from "@/components/Backstage/ArticleEdit";
 
     export default {
         name: "articleMan",
+        components: {ArticleEdit},
+        // components: {QuillEditor},
         data() {
             return {
                 data: [],
@@ -37,7 +62,9 @@
                 query: {},
                 loading: true,
                 option: {
-                    addBtn: true,
+                    addBtn: false,
+                    editBtn: false,
+                    viewBtn: false,
                     height: 'auto',
                     calcHeight: 145,
                     tip: false,
@@ -47,7 +74,6 @@
                     excelBtn: true,
                     border: true,
                     index: true,
-                    viewBtn: true,
                     selection: true,
                     dialogClickModal: false,
                     column: [
@@ -57,7 +83,9 @@
                         {
                             label: '创建时间', prop: 'createTime', width: 200, addDisplay: false,
                             editDisplay: false,
-                            format: "yyyy-MM-dd hh:mm:ss", valueFormat: "yyyy-MM-dd HH:mm:ss"
+                            formatter: (val) => {
+                                return this.$moment(val.createTime).format('YYYY-MM-DD HH:mm:ss');
+                            }
                         },
                         {label: '文章内容', prop: 'articleContent', showColumn: false, hide: true,},
                         {
@@ -74,13 +102,59 @@
                     total: 0
                 },
                 selectionList: [],
+                editorOption: {
+                    placeholder: '说些什么吧...',
+                    modules: {
+                        toolbar: {
+                            container: [
+                                ['bold', 'italic', 'underline'], //加粗，斜体，下划线，删除线
+                                ['code-block'], //引用，代码块
+                                [{
+                                    'header': 1
+                                }, {
+                                    'header': 2
+                                }], // 标题，键值对的形式；1、2表示字体大小
+                                [{
+                                    'header': [1, 2, 3, 4, 5, 6, false]
+                                }], //几级标题
+                                [{
+                                    'color': []
+                                }, {
+                                    'background': []
+                                }], // 字体颜色，字体背景颜色
+                                [{
+                                    'align': []
+                                }], //对齐方式
+                                ['clean'], //清除字体样式
+                                ['link', 'image', 'video'] //上传图片、上传视频
+                            ],
+                            handlers: {
+                                'image': function (value) {
+                                    if (value) {
+                                        // 触发input框选择图片文件
+                                        document.querySelector(".quill-img input").click();
+                                    } else {
+                                        this.quill.format("image", false);
+                                    }
+                                }
+                            }
+                        },
+                    }
+                },
+                editVisible: false,
             };
         },
         directives: {},
-        created() {
-        },
         computed: {},
         methods: {
+            async editRow(row) {
+                this.form = row;
+                this.editVisible = true;
+            },
+            addRow() {
+                this.form = {};
+                this.editVisible = true;
+            },
             async rowSave(row, done, loading) {
                 try {
                     await add(row)

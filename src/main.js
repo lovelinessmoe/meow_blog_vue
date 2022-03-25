@@ -6,20 +6,16 @@ import * as ElIconModules from '@element-plus/icons-vue'
 import router from '@/router'
 import Avue from '@smallwei/avue';
 import '@smallwei/avue/lib/index.css';
-/*import VueQuillEditor from 'vue-quill-editor'
-import 'quill/dist/quill.core.css'
-import 'quill/dist/quill.snow.css'
-import 'quill/dist/quill.bubble.css'*/
-/*
-import {quillEditor, Quill} from 'vue-quill-editor'
-import {container, ImageExtend, QuillWatch} from 'quill-image-extend-module'
+import moment from 'moment'
 
-Quill.register('modules/ImageExtend', ImageExtend)*/
 const app = createApp(App)
-app.use(Avue, {});
+// 将 store 实例作为插件安装
+app.use(Avue, {size: 'small',});
 app.use(router)
-// app.use(VueQuillEditor)
+app.use(moment)
+app.config.globalProperties.$moment = moment
 app.use(ElementPlus)
+app.config.silent = true
 // 统一注册el-icon图标
 for (let iconName in ElIconModules) {
     app.component(iconName, ElIconModules[iconName])

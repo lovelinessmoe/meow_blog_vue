@@ -29,11 +29,11 @@
                 <avatar/>
             </el-icon>
             <span>标签管理(close)</span></el-menu-item>
-        <el-menu-item index="5" route="/backstage/addArticle">
+        <!--<el-menu-item index="5" route="/backstage/addArticle">
             <el-icon>
                 <avatar/>
             </el-icon>
-            <span>添加文章</span></el-menu-item>
+            <span>添加文章</span></el-menu-item>-->
     </el-menu>
 </template>
 

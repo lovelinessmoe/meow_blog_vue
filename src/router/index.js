@@ -35,7 +35,7 @@ const routes = [
             {path: 'home', component: () => import('@/views/Backstage/BackHomePage')},
             {path: 'userMan', component: () => import('@/views/Backstage/UserMan')},
             {path: 'articleMan', component: () => import('@/views/Backstage/ArticleMan')},
-            {path: 'addArticle', component: () => import('@/views/Backstage/AddArticle')},
+            // {path: 'addArticle', component: () => import('@/components/Backstage/ArticleEdit')},
         ]
     },
 ]

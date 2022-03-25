@@ -39,7 +39,7 @@
                         <template #title>你好, {{user.data.username}}</template>
 <!--            <template #title>你好,</template>-->
             <el-menu-item index="5-1" route="/blog/userInfo">个人信息</el-menu-item>
-            <el-menu-item index="5-2" route="/login">切换账号</el-menu-item>
+            <el-menu-item index="5-2" route="/login" @click="switchUser()">切换账号</el-menu-item>
             <el-menu-item index="5-3" route="/logout" @click="logout()">退出登陆
             </el-menu-item>
         </el-sub-menu>
@@ -88,7 +88,12 @@
                 removeToken()
                 removeUser()
                 this.$router.go(0)
-            }
+            },
+            async switchUser() {
+                await logout()
+                removeToken()
+                removeUser()
+            },
         }
     }
 </script>

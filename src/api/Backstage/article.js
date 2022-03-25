@@ -19,16 +19,11 @@ export const add = (article) => {
         data: article,
     })
 }
-export const addArticle = (article) => {
+export const saveOrUpdateArticle = (article) => {
     return request({
-        url: 'backstage/article/addArticle',
+        url: 'backstage/article/saveOrUpdateArticle',
         method: 'post',
-        data: {
-            articleContent: JSON.stringify(article.articleContent),
-            articleId: article.articleId,
-            articleTitle: article.articleTitle,
-            articleShort: article.articleShort,
-        },
+        data: article,
     })
 }
 
