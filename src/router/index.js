@@ -14,6 +14,7 @@ const routes = [
             {path: 'about', component: () => import('@/views/About.vue')},
             {path: 'userInfo', component: () => import('@/views/UserInfo.vue')},
             {path: 'tags', component: () => import('@/views/Tags.vue')},
+            {path: 'view/:id', component: () => import('@/components/BlogView.vue')},
         ],
     },
     {path: '/login', component: () => import('@/components/Login.vue')},

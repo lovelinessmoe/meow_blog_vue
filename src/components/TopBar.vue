@@ -1,14 +1,9 @@
 <template>
-    <el-menu
-            style="width: 100%"
-            router="true"
-            class="el-menu-demo"
-            mode="horizontal"
-            background-color="#545c64"
-            text-color="#fff"
-            active-text-color="#ffd04b">
+    <el-menu :default-active="0" class="d-flex" mode="horizontal" :router="true" type="flex">
+
         <el-menu-item index="0" route="/blog/home">
-            <img src="@/assets/img/logo.png" style="height: 58px;">
+            <!--            <img src="@/assets/img/logo.png" style="height: 58px;">-->
+            <span>HOME</span>
         </el-menu-item>
         <el-menu-item index="1" route="/blog/home">
             <el-icon>
@@ -36,8 +31,8 @@
         </el-menu-item>
         <el-sub-menu index="5"
                      style="margin-left: auto;" v-if="User_show">
-                        <template #title>你好, {{user.data.username}}</template>
-<!--            <template #title>你好,</template>-->
+            <template #title>你好, {{user.data.username}}</template>
+            <!--            <template #title>你好,</template>-->
             <el-menu-item index="5-1" route="/blog/userInfo">个人信息</el-menu-item>
             <el-menu-item index="5-2" route="/login" @click="switchUser()">切换账号</el-menu-item>
             <el-menu-item index="5-3" route="/logout" @click="logout()">退出登陆
