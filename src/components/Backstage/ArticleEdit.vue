@@ -27,7 +27,7 @@
             </template>
 
             <QuillEditor ref="myEditor"
-                         style="height: 60%"
+                         style="height: 450px;"
                          theme="snow"
                          :options="editorOption"
                          @ready="editReady(quill)"

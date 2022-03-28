@@ -1,26 +1,36 @@
 <template>
-    <avue-crud
-            :option="option"
-            :table-loading="loading"
-            :data="data"
-            v-model:page="page"
-            v-model="form"
-            ref="crud"
-            @row-update="rowUpdate"
-            @row-save="rowSave"
-            @row-del="rowDel"
-            @search-change="searchChange"
-            @search-reset="searchReset"
-            @selection-change="selectionChange"
-            @current-change="currentChange"
-            @size-change="sizeChange"
-            @refresh-change="refreshChange"
-            @on-load="onLoad"
-    ></avue-crud>
+    <div class="animate" style="margin-top: 80px;padding: 20px;">
+        <avue-crud
+                :option="option"
+                :table-loading="loading"
+                :data="data"
+                v-model:page="page"
+                v-model="form"
+                ref="crud"
+                @row-update="rowUpdate"
+                @row-save="rowSave"
+                @row-del="rowDel"
+                @search-change="searchChange"
+                @search-reset="searchReset"
+                @selection-change="selectionChange"
+                @current-change="currentChange"
+                @size-change="sizeChange"
+                @refresh-change="refreshChange"
+                @on-load="onLoad">
+
+            <template #menu-left="">
+                <el-button type="text" @click="delSelection">
+                    删除{{selectionList.length}}个用户
+                </el-button>
+            </template>
+
+        </avue-crud>
+    </div>
+
 </template>
 
 <script>
-    import {add, update, remove, getList} from "@/api/Backstage/user";
+    import {add, update, remove, getList, removeMany} from "@/api/Backstage/user";
 
     export default {
         name: "UserMan",
@@ -67,6 +77,27 @@
         },
         computed: {},
         methods: {
+            async delSelection() {
+                if (this.selectionList.length !== 0) {
+                    let r = await this.$confirm("确定将选择数据删除?", {
+                        confirmButtonText: "确定",
+                        cancelButtonText: "取消",
+                        type: "warning"
+                    })
+                    if (r === 'confirm') {
+                        let res = await removeMany(this.selectionList);
+                        if (res.success) {
+                            await this.onLoad(this.page);
+                            this.$message({
+                                type: "success",
+                                message: "操作成功!"
+                            });
+                        }
+                    }
+                } else {
+                    this.$message.error('未选中任何项')
+                }
+            },
             async rowSave(row, done, loading) {
                 try {
                     await add(row)

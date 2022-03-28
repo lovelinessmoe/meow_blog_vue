@@ -7,6 +7,8 @@ import router from '@/router'
 import Avue from '@smallwei/avue';
 import '@smallwei/avue/lib/index.css';
 import moment from 'moment'
+import '@/assets/css/style.less'
+import '@/assets/font/iconfont.css'
 
 const app = createApp(App)
 // 将 store 实例作为插件安装

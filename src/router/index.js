@@ -6,21 +6,22 @@ const routes = [
     {path: '/', redirect: '/blog'},
     {path: '/blog', redirect: '/blog/home'},
     {
-        path: '/blog/', component: () => import('@/views/BlogPage.vue'),
+        path: '/blog/', component: () => import('@/components/BlogPage.vue'),
         children: [
             {path: '', redirect: '/blog/home'},
-            {path: 'home', component: () => import('@/views/Home.vue')},
-            {path: 'classification', component: () => import('@/views/Classification.vue')},
-            {path: 'about', component: () => import('@/views/About.vue')},
-            {path: 'userInfo', component: () => import('@/views/UserInfo.vue')},
-            {path: 'tags', component: () => import('@/views/Tags.vue')},
-            {path: 'view/:id', component: () => import('@/components/BlogView.vue')},
+            {path: 'home', component: () => import('@/components/Home.vue')},
+            {path: 'classification', component: () => import('@/components/Classification.vue')},
+            {path: 'about', component: () => import('@/components/About.vue')},
+            {path: 'userInfo', component: () => import('@/components/UserInfo.vue')},
+            {path: 'tags', component: () => import('@/components/Tags.vue')},
+            {path: 'article/:id', component: () => import('@/components/Articles.vue')},
         ],
     },
     {path: '/login', component: () => import('@/components/Login.vue')},
     {path: '/logout', redirect: '/blog/home'},
     {
-        path: '/backstage/', component: () => import('@/views/Backstage'),
+        path: '/backstage/', component: () => import('@/components/BlogPage.vue'),
+        // path: '/backstage/', component: () => import('@/views/Backstage'),
         beforeEnter: () => {
             let userAuth = getUserAuth();
             if (userAuth === undefined || userAuth !== 'ROLE_ADMIN') {
@@ -33,9 +34,9 @@ const routes = [
         },
         children: [
             {path: '', redirect: '/backstage/home'},
-            {path: 'home', component: () => import('@/views/Backstage/BackHomePage')},
-            {path: 'userMan', component: () => import('@/views/Backstage/UserMan')},
-            {path: 'articleMan', component: () => import('@/views/Backstage/ArticleMan')},
+            {path: 'home', component: () => import('@/components/Backstage/BackHomePage')},
+            {path: 'userMan', component: () => import('@/components/Backstage/UserMan')},
+            {path: 'articleMan', component: () => import('@/components/Backstage/ArticleMan')},
             // {path: 'addArticle', component: () => import('@/components/Backstage/ArticleEdit')},
         ]
     },

@@ -1,54 +1,61 @@
 <template>
-    <avue-crud
-            :option="option"
-            :table-loading="loading"
-            :data="data"
-            v-model:page="page"
-            v-model="form"
-            ref="crud"
-            :before-open="beforeOpen"
-            @row-update="rowUpdate"
-            @row-save="rowSave"
-            @row-del="rowDel"
-            @search-change="searchChange"
-            @search-reset="searchReset"
-            @selection-change="selectionChange"
-            @current-change="currentChange"
-            @size-change="sizeChange"
-            @refresh-change="refreshChange"
-            @on-load="onLoad">
+    <div class="animate" style="margin-top: 80px;padding: 20px;">
 
-        <template #menu-left="">
-            <el-button type="danger"
-                       icon="el-icon-plus"
-                       size="small"
-                       plain
-                       @click.stop="addRow()">新增
-            </el-button>
-        </template>
+        <avue-crud
+                :option="option"
+                :table-loading="loading"
+                :data="data"
+                v-model:page="page"
+                v-model="form"
+                ref="crud"
+                :before-open="beforeOpen"
+                @row-update="rowUpdate"
+                @row-save="rowSave"
+                @row-del="rowDel"
+                @search-change="searchChange"
+                @search-reset="searchReset"
+                @selection-change="selectionChange"
+                @current-change="currentChange"
+                @size-change="sizeChange"
+                @refresh-change="refreshChange"
+                @on-load="onLoad">
 
-        <template #menu="{row,index}">
-            <el-button type="text"
-                       icon="el-icon-edit"
-                       size="default"
-                       plain
-                       @click.stop="editRow(row,index)">编辑
-            </el-button>
-            <el-button type="text"
-                       icon="el-icon-view"
-                       size="default"
-                       plain
-                       @click.stop="$refs.crud.rowView(row,index)">查看
-            </el-button>
-        </template>
-    </avue-crud>
-    <el-button type="danger" @click="editVisible=false" v-if="editVisible">Close</el-button>
-    <ArticleEdit v-bind:articleId="form.articleId" v-if="editVisible"/>
+            <template #menu-left="">
+                <el-button type="danger"
+                           icon="el-icon-plus"
+                           size="small"
+                           plain
+                           @click.stop="addRow()">新增
+                </el-button>
+                <el-button type="text" @click="delSelection">
+                    删除{{selectionList.length}}篇文章
+                </el-button>
+            </template>
+
+            <template #menu="{row,index}">
+                <el-button type="text"
+                           icon="el-icon-edit"
+                           size="default"
+                           plain
+                           @click.stop="editRow(row,index)">编辑
+                </el-button>
+                <el-button type="text"
+                           icon="el-icon-view"
+                           size="default"
+                           plain
+                           @click.stop="viewRow(row,index)">查看
+                </el-button>
+            </template>
+
+        </avue-crud>
+        <el-button type="danger" @click="editVisible=false" v-if="editVisible">Close</el-button>
+        <ArticleEdit v-bind:articleId="form.articleId" v-if="editVisible"/>
+    </div>
 </template>
 
 <script>
     import '@vueup/vue-quill/dist/vue-quill.snow.css';
-    import {add, update, remove, getList, getDetail} from "@/api/Backstage/article";
+    import {add, update, remove, getList, getDetail, removeMany} from "@/api/Backstage/article";
     import ArticleEdit from "@/components/Backstage/ArticleEdit";
 
     export default {
@@ -147,9 +154,33 @@
         directives: {},
         computed: {},
         methods: {
+            async delSelection() {
+                if (this.selectionList.length !== 0) {
+                    let r = await this.$confirm("确定将选择数据删除?", {
+                        confirmButtonText: "确定",
+                        cancelButtonText: "取消",
+                        type: "warning"
+                    })
+                    if (r === 'confirm') {
+                        let res = await removeMany(this.selectionList);
+                        if (res.success) {
+                            await this.onLoad(this.page);
+                            this.$message({
+                                type: "success",
+                                message: "操作成功!"
+                            });
+                        }
+                    }
+                } else {
+                    this.$message.error('未选中任何项')
+                }
+            },
             async editRow(row) {
                 this.form = row;
                 this.editVisible = true;
+            },
+            async viewRow(row) {
+                await this.$router.push("/blog/article/" + row.articleId);
             },
             addRow() {
                 this.form = {};

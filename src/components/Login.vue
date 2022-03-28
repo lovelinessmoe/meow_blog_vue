@@ -1,12 +1,9 @@
 <template>
     <!--登录表单的容器-->
     <div class="login_container" :style="login_container">
-        <!--<div class="avatar_box">
-            <img src="src/assets/img/logo.png">
-        </div>-->
         <!--登录区域-->
         <div class="login_box">
-            <el-form :model="loginForm" :rules="loginRules" ref="loginForm" label-width="0px" class="login_form">
+            <el-form :model="loginForm" :rules="loginRules" ref="loginForm" class="login_form">
 
                 <el-form-item prop="username">
                     <el-input v-model="loginForm.userName" placeholder="请输入用户名称"
@@ -80,7 +77,7 @@
                 },
                 captchaImg: null,
                 loginRules: {
-                    username: [{
+                    userName: [{
                         required: true,
                         message: '请输入用户名称',
                         trigger: 'blur'
@@ -89,7 +86,8 @@
                         max: 16,
                         message: '长度在 3 到 16 个字符',
                         trigger: 'blur'
-                    }], password: [{
+                    }],
+                    password: [{
                         required: true,
                         message: '请输入登录密码',
                         trigger: 'blur'
@@ -98,16 +96,18 @@
                         max: 16,
                         message: '长度在 3 到 16 个字符',
                         trigger: 'blur'
-                    }
-                    ], RePassword: [{
+                    }],
+                    RePassword: [{
                         required: true,
                         message: '请重复输入一次登录密码',
                         trigger: 'blur'
-                    }], verifyCode: [{
+                    }],
+                    verifyCode: [{
                         required: true,
                         message: '请输入验证码',
                         trigger: 'blur'
-                    }], email: [{
+                    }],
+                    email: [{
                         required: true,
                         message: '请输入邮箱',
                         trigger: 'blur'
@@ -187,18 +187,20 @@
 
 <style lang="less" scoped>
     .login_container {
-        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 80px;
+        min-height: calc(100vh - 80px);
     }
 
     .login_box {
+        border: 1px solid red;
+        margin: 0 auto;
         padding: 20px;
         background-color: whitesmoke;
         width: 300px;
-        border-radius: 8px;
-        position: absolute;
-        left: 18%;
-        top: 45%;
-        transform: translate(-50%, -50%);
+        border-radius: 18px;
 
         .login_form {
             width: 100%;

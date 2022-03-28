@@ -37,4 +37,11 @@ export const remove = (ids) => {
         }
     })
 }
+export const removeMany = (userList) => {
+    return request({
+        url: 'backstage/user/removeMany',
+        method: 'post',
+        data: userList
+    })
+}
 

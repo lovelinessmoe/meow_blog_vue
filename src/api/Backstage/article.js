@@ -44,6 +44,13 @@ export const remove = (articleId) => {
         }
     })
 }
+export const removeMany = (articleList) => {
+    return request({
+        url: 'backstage/article/removeMany',
+        method: 'post',
+        data: articleList
+    })
+}
 
 export const getDetail = (ids) => {
     return request({
