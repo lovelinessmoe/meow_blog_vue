@@ -13,8 +13,8 @@
                 </router-link>
             </h1>
             <div class="p-time">
-                <i class="iconfont iconmeditor-time"></i> {{this.$moment(post.createTime).format('YYYY-MM-DD
-                HH:mm:ss')}}
+                <i class="iconfont iconmeditor-time"></i>
+                {{this.$moment(post.createTime).format('YYYY-MM-DD HH:mm:ss')}}
                 <i v-if="post.isHot" class="iconfont iconfire" style="margin-left: 5px;color: #ff6d6d;"></i>
             </div>
             <p class="summary">{{post.articleShort}}</p>
