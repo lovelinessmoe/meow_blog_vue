@@ -8,7 +8,7 @@
 
 <script>
     export default {
-        name: "header-search",
+        name: "HeaderSearch",
         data() {
             return {
                 searchValue: '',

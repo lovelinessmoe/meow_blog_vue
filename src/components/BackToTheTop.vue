@@ -10,7 +10,7 @@
 
 <script>
     export default {
-        name: "back-top",
+        name: "BackToTheTop",
         data() {
             return {
                 show: false

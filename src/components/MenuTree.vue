@@ -11,7 +11,7 @@
 
 <script>
     export default {
-        name: "menuTree",
+        name: "MenuTree",
         props: {
             menus: {
                 type: [Object, Array],

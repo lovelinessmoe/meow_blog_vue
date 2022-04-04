@@ -59,3 +59,13 @@ export const getDetail = (ids) => {
     })
 }
 
+export const switchTop = (articleId) => {
+    return request({
+        url: 'backstage/article/switchTop',
+        method: 'post',
+        params: {
+            articleId,
+        }
+    })
+}
+

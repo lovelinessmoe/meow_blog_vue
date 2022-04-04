@@ -33,8 +33,7 @@
 
 <script>
     export default {
-        // eslint-disable-next-line vue/multi-word-component-names
-        name: "banner",
+        name: "BannerView",
         data() {
             return {
                 websiteInfo: {},
@@ -44,21 +43,19 @@
                     icon: 'iconqq',
                     color: '#1AB6FF ',
                     href: 'http://wpa.qq.com/msgrd?v=3&uin=1695560542&site=qq&menu=yes'
-                },
-                    {
-                        id: 2,
-                        title: 'Gitee',
-                        icon: 'icongitee',
-                        color: '#d81e06',
-                        href: 'https://gitee.com/lovelinessmoe'
-                    },
-                    {
-                        id: 3,
-                        title: 'GitHub',
-                        icon: 'icongithub',
-                        color: '',
-                        href: 'https://github.com/lovelinessmoe'
-                    }],
+                }, {
+                    id: 2,
+                    title: 'Gitee',
+                    icon: 'icongitee',
+                    color: '#d81e06',
+                    href: 'https://gitee.com/lovelinessmoe'
+                }, {
+                    id: 3,
+                    title: 'GitHub',
+                    icon: 'icongithub',
+                    color: '',
+                    href: 'https://github.com/lovelinessmoe'
+                }],
                 slogan: '苟利国家生死以',
                 avatar: '@/assets/img/logo.png'
             }

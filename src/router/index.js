@@ -5,14 +5,14 @@ import {ElNotification} from 'element-plus'
 const routes = [
     {path: '/', redirect: '/blog'},
     {path: '/blog', redirect: '/blog/home'},
+    {path: '/test', component: () => import('@/components/Img/Tailoring')},
     {
         path: '/blog/', component: () => import('@/components/BlogPage.vue'),
         children: [
             {path: '', redirect: '/blog/home'},
-            {path: 'home', component: () => import('@/components/Home.vue')},
-            {path: 'classification', component: () => import('@/components/Classification.vue')},
-            {path: 'about', component: () => import('@/components/About.vue')},
-            {path: 'userInfo', component: () => import('@/components/UserInfo.vue')},
+            {path: 'home', component: () => import('@/components/Page/Home.vue')},
+            {path: 'about', component: () => import('@/components/Page/About.vue')},
+            {path: 'userInfo', component: () => import('@/components/Page/UserInfo.vue')},
             {path: 'tags', component: () => import('@/components/Tags.vue')},
             {path: 'article/:id', component: () => import('@/components/Articles.vue')},
         ],

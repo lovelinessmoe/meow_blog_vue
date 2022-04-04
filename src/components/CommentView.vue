@@ -31,12 +31,11 @@
 </template>
 
 <script>
-    import sectionTitle from '@/components/section-title'
+    import sectionTitle from '@/components/SectionTitle'
     import commentMessageEditor from 'comment-message-editor'
 
     export default {
-        // eslint-disable-next-line vue/multi-word-component-names
-        name: "comment",
+        name: "CommentView",
         props: {
             comment: {
                 type: Object

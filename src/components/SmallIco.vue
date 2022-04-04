@@ -10,7 +10,7 @@
 
 <script>
     export default {
-        name: "small-ico"
+        name: "SmallIco"
     }
 </script>
 

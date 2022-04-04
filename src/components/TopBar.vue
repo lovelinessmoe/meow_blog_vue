@@ -68,7 +68,7 @@
 <script>
     import {getUser, getToken, removeToken, removeUser, getUserAuth} from '@/utils/token'
     import {logout} from "@/api/login";
-    import HeaderSearch from "@/components/header-search";
+    import HeaderSearch from "@/components/HeaderSearch";
 
     export default {
         name: "TopBar",

@@ -6,7 +6,7 @@
 
 <script>
     export default {
-        name: "section-title"
+        name: "SectionTitle"
     }
 </script>
 

@@ -8,7 +8,9 @@
                     <span v-if="searchWords">搜索结果："{{searchWords}}" 相关文章</span>
                     <span v-else-if="category">分类 "{{category}}" 相关文章</span>
                 </div>
-                <quote v-else>{{notice}}</quote>
+                <div class="quote" v-else>
+                    {{notice}}
+                </div>
             </div>
 
             <!--焦点图-->
@@ -28,7 +30,7 @@
             <main class="site-main" :class="{'search':hideSlogan}">
                 <section-title v-if="!hideSlogan">推荐</section-title>
                 <template v-for="item in postList" :key="item.articleId">
-                    <post :post="item"></post>
+                    <BlogCard :blog="item"></BlogCard>
                 </template>
             </main>
 
@@ -42,23 +44,38 @@
 
 <script>
     import {getList} from "@/api/article";
-    import Banner from "@/components/banner";
-    import Feature from '@/components/feature'
-    import sectionTitle from '@/components/section-title'
-    import Post from '@/components/post'
-    import SmallIco from '@/components/small-ico'
-    import Quote from '@/components/quote'
+    import Banner from "@/components/BannerView";
+    import Feature from '@/components/FeatureCard'
+    import sectionTitle from '@/components/SectionTitle'
+    import BlogCard from '@/components/BlogCard'
+    import SmallIco from '@/components/SmallIco'
 
     export default {
         name: "HomePage",
-        components: {Banner, Feature, sectionTitle, Post, SmallIco, Quote},
+        components: {Banner, Feature, sectionTitle, BlogCard, SmallIco},
         props: ['cate', 'words'],
         async created() {
             await this.getListPage();
         },
         data() {
             return {
-                features: [],
+                features: [
+                    {
+                        id: 1,
+                        title: 'Akina',
+                        img: 'https://s1.ax1x.com/2020/05/14/YDfRnU.jpg'
+                    },
+                    {
+                        id: 2,
+                        title: '使用说明',
+                        img: 'https://s1.ax1x.com/2020/05/14/YDf4AJ.jpg'
+                    },
+                    {
+                        id: 3,
+                        title: '文章归档',
+                        img: 'https://s1.ax1x.com/2020/05/14/YDfT91.jpg'
+                    }
+                ],
                 postList: [],
                 current: 1,
                 hasNextPage: false
@@ -72,11 +89,10 @@
                 return this.$route.params.cate
             },
             hideSlogan() {
-                return true;
-                // return this.category || this.searchWords
+                return this.category || this.searchWords
             },
             notice() {
-                return false;
+                return "苟利国家生死以，岂因祸福避趋之";
                 // return this.$store.getters.notice
             }
         },
@@ -88,13 +104,20 @@
                 this.hasNextPage = res.hasNextPage;
             },
             async loadMore() {
-                await this.getListPage(this.current++);
+                await this.getListPage(++this.current);
             },
         }
     }
 </script>
 
 <style scoped lang="less">
+
+    .quote {
+        border-left: 3px solid #ff6d6d;
+        background-color: #FBFBFB;
+        padding: 15px 20px;
+        border-radius: 3px;
+    }
 
     .site-content {
         .notify {

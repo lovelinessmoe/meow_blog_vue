@@ -20,6 +20,7 @@
                 @refresh-change="refreshChange"
                 @on-load="onLoad">
 
+            <!--            上栏插槽-->
             <template #menu-left="">
                 <el-button type="danger"
                            icon="el-icon-plus"
@@ -31,7 +32,7 @@
                     删除{{selectionList.length}}篇文章
                 </el-button>
             </template>
-
+            <!--            操作插槽-->
             <template #menu="{row,index}">
                 <el-button type="text"
                            icon="el-icon-edit"
@@ -46,16 +47,22 @@
                            @click.stop="viewRow(row,index)">查看
                 </el-button>
             </template>
+            <!--            自定义列-->
+            <template #isTop="{row}">
+                <el-switch v-model="row.isTop" @change="switchTopStat(row.articleId)"/>
+            </template>
+
 
         </avue-crud>
-        <el-button type="danger" @click="editVisible=false" v-if="editVisible">Close</el-button>
-        <ArticleEdit v-bind:articleId="form.articleId" v-if="editVisible"/>
+        <!--        <el-button type="danger" @click="editVisible=false" v-if="editVisible">Close</el-button>-->
+        <ArticleEdit v-bind:articleId="form.articleId" v-if="editVisible"
+                     @close="editVisible=false"/>
     </div>
 </template>
 
 <script>
     import '@vueup/vue-quill/dist/vue-quill.snow.css';
-    import {add, update, remove, getList, getDetail, removeMany} from "@/api/Backstage/article";
+    import {add, update, remove, getList, getDetail, removeMany, switchTop} from "@/api/Backstage/article";
     import ArticleEdit from "@/components/Backstage/ArticleEdit";
 
     export default {
@@ -94,11 +101,14 @@
                                 return this.$moment(val.createTime).format('YYYY-MM-DD HH:mm:ss');
                             }
                         },
-                        {label: '文章内容', prop: 'articleContent', showColumn: false, hide: true,},
-                        {
+                        {label: '查看人数', prop: 'viewsCount',},
+                        {label: '评论人数', prop: 'commentsCount',},
+                        {label: '置顶', prop: 'isTop',},
+                        // {label: '文章内容', prop: 'articleContent', showColumn: false, hide: true,},
+                        /*{
                             label: '类型', prop: 'type', showColumn: false, hide: true,
                             addDisplay: false, editDisplay: false
-                        },
+                        },*/
                     ]
                 },
                 currentStartIndex: 0,
@@ -109,51 +119,21 @@
                     total: 0
                 },
                 selectionList: [],
-                editorOption: {
-                    placeholder: '说些什么吧...',
-                    modules: {
-                        toolbar: {
-                            container: [
-                                ['bold', 'italic', 'underline'], //加粗，斜体，下划线，删除线
-                                ['code-block'], //引用，代码块
-                                [{
-                                    'header': 1
-                                }, {
-                                    'header': 2
-                                }], // 标题，键值对的形式；1、2表示字体大小
-                                [{
-                                    'header': [1, 2, 3, 4, 5, 6, false]
-                                }], //几级标题
-                                [{
-                                    'color': []
-                                }, {
-                                    'background': []
-                                }], // 字体颜色，字体背景颜色
-                                [{
-                                    'align': []
-                                }], //对齐方式
-                                ['clean'], //清除字体样式
-                                ['link', 'image', 'video'] //上传图片、上传视频
-                            ],
-                            handlers: {
-                                'image': function (value) {
-                                    if (value) {
-                                        // 触发input框选择图片文件
-                                        document.querySelector(".quill-img input").click();
-                                    } else {
-                                        this.quill.format("image", false);
-                                    }
-                                }
-                            }
-                        },
-                    }
-                },
                 editVisible: false,
             };
         },
         directives: {},
         computed: {},
         methods: {
+            async switchTopStat(articleId) {
+                let res = switchTop(articleId);
+                if (res.success) {
+                    this.$message({
+                        type: "success",
+                        message: "操作成功!"
+                    });
+                }
+            },
             async delSelection() {
                 if (this.selectionList.length !== 0) {
                     let r = await this.$confirm("确定将选择数据删除?", {
@@ -176,15 +156,21 @@
                 }
             },
             async editRow(row) {
-                this.form = row;
-                this.editVisible = true;
+                this.editVisible = false;
+                this.$nextTick(() => {
+                    this.form = row;
+                    this.editVisible = true;
+                })
             },
             async viewRow(row) {
                 await this.$router.push("/blog/article/" + row.articleId);
             },
             addRow() {
-                this.form = {};
-                this.editVisible = true;
+                this.editVisible = false;
+                this.$nextTick(() => {
+                    this.form = {};
+                    this.editVisible = true;
+                })
             },
             async rowSave(row, done, loading) {
                 try {

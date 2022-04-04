@@ -1,6 +1,6 @@
 <template>
     <div class="articles">
-        <banner></banner>
+        <banner :src="this.blog.imgUrl"></banner>
         <div class="site-content animate">
             <!-- 文章目录 -->
             <div id="article-menus">
@@ -26,7 +26,7 @@
                             <!-- 阅读次数 -->
                             <div class="post-like">
                                 <i class="iconfont iconeyes"></i>
-                                <span class="count">685</span>
+                                <span class="count">{{blog.viewsCount}}</span>
                             </div>
                             <!-- 分享按钮 -->
                             <!--                        <div class="post-share">-->
@@ -91,10 +91,10 @@
 </template>
 
 <script>
-    import Banner from '@/components/banner'
-    import sectionTitle from '@/components/section-title'
-    import comment from '@/components/comment'
-    import menuTree from '@/components/menu-tree'
+    import Banner from '@/components/BannerView'
+    import sectionTitle from '@/components/SectionTitle'
+    import comment from '@/components/CommentView'
+    import menuTree from '@/components/MenuTree'
     import {getBlogDetail} from "@/api/article";
 
     export default {
@@ -154,6 +154,7 @@
             async getBlog() {
                 let res = await getBlogDetail(this.$route.params.id);
                 this.blog = res.data;
+                this.bannerShow=true;
                 this.$nextTick(function () {
                     this.createMenus();
                 })
