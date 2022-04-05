@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {ElNotification} from 'element-plus'
-import {getToken, removeToken, removeUser} from '@/utils/token'
+import {removeUser} from '@/utils/token'
+import store from '@/store'
 
 const instance = axios.create({
     baseURL: 'http://localhost:80',
@@ -10,15 +11,16 @@ const instance = axios.create({
 
 // request拦截器
 instance.interceptors.request.use(config => {
-    if (getToken()) {
-        config.headers.Authorization = getToken()
+    console.dir(store.state.user)
+    if (store.state.user) {
+        config.headers.Authorization = store.state.user.token
     }
     return config
 }, error => {
     Promise.reject(error)
 })
 
-// respone拦截器
+// response拦截器
 instance.interceptors.response.use(response => {
     const res = response.data
     if (!res.success) {
@@ -31,7 +33,6 @@ instance.interceptors.response.use(response => {
         //登陆过期
         if (res.code === 2002) {
             removeUser()
-            removeToken()
             window.location.href = '/login'
         }
 

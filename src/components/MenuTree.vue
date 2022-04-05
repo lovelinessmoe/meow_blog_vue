@@ -1,7 +1,8 @@
+<!--文章的列表-->
 <template>
     <ul class="menus">
         <li v-for="item in menus" :key="item.id">
-            <span @click="goAnchor('#'+item.id)">#{{item.title}}</span>
+            <span style="cursor: pointer;" @click="goAnchor('#'+item.id)">#{{item.title}}</span>
             <ul v-if="item[childLabel]" class="child">
                 <menu-tree :menus="item[childLabel]" :child-label="childLabel"></menu-tree>
             </ul>

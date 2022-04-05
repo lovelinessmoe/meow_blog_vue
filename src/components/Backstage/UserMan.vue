@@ -1,3 +1,4 @@
+<!--用户管理-->
 <template>
     <div class="animate" style="margin-top: 80px;padding: 20px;">
         <avue-crud
@@ -178,7 +179,10 @@
                 this.loading = false;
                 this.selectionClear();
             }
-        }
+        },
+        mounted() {
+            this.$store.commit('SET_LOADING', false);
+        },
     }
 </script>
 

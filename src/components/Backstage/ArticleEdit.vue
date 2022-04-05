@@ -67,6 +67,7 @@
         name: "ArticleEdit",
         components: {QuillEditor, CropperImage},
         props: ['articleId'],
+        emits: ['close'],
         created() {
         },
         data() {

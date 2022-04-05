@@ -1,6 +1,8 @@
+<!--头展示-->
 <template>
     <div id="banner" :class="{'home-banner':isHome}">
-        <div class="banner-img" :style="{'background-image': `url(${src})`}">
+        <div class="banner-img"
+             :style="{'background-image': `url(${src?src:'https://s2.loli.net/2022/04/05/L7DH4coMPSAKe1a.jpg'})`}">
             <template v-if="isHome">
                 <!--博主信息-->
                 <div class="focusinfo">
@@ -62,8 +64,7 @@
         },
         props: {
             src: {
-                type: String,
-                default: 'https://s1.ax1x.com/2020/05/23/YxaLMq.jpg'
+                type: String
             },
             isHome: {
                 type: [Boolean, String],

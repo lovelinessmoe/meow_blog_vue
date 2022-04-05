@@ -1,3 +1,4 @@
+<!--图片裁剪-->
 <template>
     <div class="cropper-content">
         <div class="cropper-box">
@@ -71,6 +72,7 @@
             VueCropper
         },
         props: {fixedNumber: {default: () => [1, 1]}},
+        emits: ['upload-img-success'],
         data() {
             return {
                 previews: {},

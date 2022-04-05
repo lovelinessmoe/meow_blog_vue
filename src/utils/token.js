@@ -1,41 +1,28 @@
-export function getToken() {
-    return localStorage.token
-}
+import store from '@/store'
 
-export function setToken(token) {
-    return localStorage.token = token
-}
 
-export function removeToken() {
-    return localStorage.removeItem('token')
-}
-
+/**
+ * 获取登陆用户
+ * 如果是没登陆返回的是undefined
+ */
 export function getUser() {
-    let user = undefined
+    let user = undefined;
     try {
-        user = JSON.parse(localStorage.user)
+        user = JSON.parse(localStorage.user);
     } catch (e) {
-        console.log('用户未登陆')
+        console.log('用户未登陆');
     }
-    return user
-}
-
-export function getUserAuth() {
-    let userAuth = undefined
-    try {
-        userAuth = JSON.parse(localStorage.user).data.authorities[0].authority
-    } catch (e) {
-        console.log('用户未登陆')
-    }
-    return userAuth
+    return user;
 }
 
 export function setUser(user) {
-    return localStorage.user = JSON.stringify(user)
+    localStorage.user = JSON.stringify(user);
+    store.commit('REFRESH_USER');
 }
 
 export function removeUser() {
-    return localStorage.removeItem('user')
+    localStorage.removeItem('user');
+    store.commit('REFRESH_USER');
 }
 
 

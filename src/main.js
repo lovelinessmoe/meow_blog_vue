@@ -9,11 +9,12 @@ import '@smallwei/avue/lib/index.css';
 import moment from 'moment'
 import '@/assets/css/style.less'
 import '@/assets/font/iconfont.css'
+import store from '@/store'
 
 const app = createApp(App)
-// 将 store 实例作为插件安装
 app.use(Avue, {size: 'small',});
 app.use(router)
+app.use(store)
 app.use(moment)
 app.config.globalProperties.$moment = moment
 app.use(ElementPlus)

@@ -1,3 +1,4 @@
+<!--聚焦的卡片视图-->
 <template>
     <div class="feature">
         <router-link :to="`/article/${data.id}`">
@@ -9,7 +10,7 @@
 
 <script>
     export default {
-        name: "BlogCard",
+        name: "FeatureCard",
         props: {
             data: {
                 type: Object,

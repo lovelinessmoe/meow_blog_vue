@@ -31,7 +31,8 @@
             <div class="menu-item">
                 <router-link to="/blog/about">关于</router-link>
             </div>
-            <div class="menu-item hasChild" v-if="Auth_show">
+            <div class="menu-item hasChild"
+                 v-if="this.$store.state.user?this.$store.state.user.authorities[0].authority==='ROLE_ADMIN':false">
                 <router-link to="/backstage">后台管理</router-link>
                 <div class="childMenu">
                     <div class="sub-menu">
@@ -45,8 +46,8 @@
                     </div>
                 </div>
             </div>
-            <div class="menu-item hasChild" v-if="User_show">
-                <router-link to="/blog/userInfo">你好, {{user.data.username}}</router-link>
+            <div class="menu-item hasChild" v-if="this.$store.state.user">
+                <router-link to="/blog/userInfo">你好 {{this.$store.state.user.username}}</router-link>
                 <div class="childMenu">
                     <div class="sub-menu">
                         <a @click="switchUser()">切换账号</a>
@@ -57,7 +58,7 @@
                 </div>
             </div>
 
-            <div class="menu-item" v-if="!User_show">
+            <div class="menu-item" v-else>
                 <router-link to="/login">登陆/注册</router-link>
             </div>
         </div>
@@ -66,16 +67,15 @@
 </template>
 
 <script>
-    import {getUser, getToken, removeToken, removeUser, getUserAuth} from '@/utils/token'
     import {logout} from "@/api/login";
     import HeaderSearch from "@/components/HeaderSearch";
+    import {removeUser} from "@/utils/token";
 
     export default {
         name: "TopBar",
         components: {HeaderSearch},
         data() {
             return {
-                Auth_show: false, User_show: false, user: getUser(),
                 lastScrollTop: 0,
                 fixed: false,
                 hidden: false,
@@ -90,37 +90,17 @@
             window.removeEventListener("scroll", this.watchScroll);
         },
         created() {
-            this.Auth()
-            this.Logined();
+            // 更新vuex的用户状态
+            this.$store.commit('REFRESH_USER');
         },
         methods: {
-            async Auth() {
-                let userAuth = getUserAuth()
-                console.log(userAuth)
-                if (userAuth === undefined || userAuth !== 'ROLE_ADMIN') {
-                    this.Auth_show = false;
-                } else {
-                    this.Auth_show = true;
-                }
-            },
-            async Logined() {
-                let token = await getToken()
-                if (token === undefined) {
-                    this.User_show = false;
-                } else {
-                    this.User_show = true;
-                }
-            },
             async logout() {
                 await logout();
-                removeToken();
-                removeUser();
-                await this.$router.push("/logout");
+                await removeUser();
             },
             async switchUser() {
+                await removeUser();
                 await logout();
-                removeToken();
-                removeUser();
                 await this.$router.push("/login");
             },
             watchScroll() {

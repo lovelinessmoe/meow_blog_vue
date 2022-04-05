@@ -1,15 +1,31 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import {createStore} from 'vuex'
+import {getUser} from '@/utils/token'
 
-Vue.use(Vuex)
+const state = {
+    loading: false,
+    user: undefined,
+}
+const mutations = {
+    SET_LOADING: (state, v) => {
+        state.loading = v;
+    },
+    async REFRESH_USER(state) {
+        state.user = await getUser();
+    }
+}
+const actions = {}
+const getters = {
+    loading: state => state.loading,
+}
 
-export default new Vuex.Store({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
+const store = createStore({
+    state,
+    mutations,
+    actions,
+    modules: {},
+    getters
 })
+
+export default store
+
+

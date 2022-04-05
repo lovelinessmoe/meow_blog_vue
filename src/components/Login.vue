@@ -1,6 +1,9 @@
+<!--登陆-->
 <template>
     <!--登录表单的容器-->
-    <div class="login_container" :style="login_container">
+    <div class="login_container"
+         style="background-image: url('https://s2.loli.net/2022/04/03/NxQafWFpP5YkTm3.jpg');
+                background-repeat: no-repeat;background-size: cover">
         <!--登录区域-->
         <div class="login_box">
             <el-form :model="loginForm" :rules="loginRules" ref="loginForm" class="login_form">
@@ -51,19 +54,13 @@
 
 <script>
     import {login, captcha, register} from '@/api/login'
-    import {setToken, setUser} from '@/utils/token'
     import {ElNotification} from 'element-plus'
-
+    import {setUser} from "@/utils/token";
 
     export default {
         name: "LoginComponent",
         data() {
             return {
-                login_container: {
-                    backgroundImage: 'url(' + require('@/assets/img/login_back.jpg') + ')',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundSize: 'cover'
-                },
                 type: "login",
                 loginForm: {
                     userName: 'love',
@@ -122,31 +119,16 @@
             async submitForm() {
                 if (this.type === 'login') {
                     const res = await login(this.loginForm)
-                        .catch((e) => {
-                            //重新获取验证码
-                            this.captcha()
-                            //验证码获得焦点
-                            this.$refs.verifyCode.$el.querySelector('input').focus()
-                            return e
-                        })
                     if (res.success) {
-                        setToken(res.data.token)
-                        setUser(res)
+                        setUser(res.data);
                         ElNotification({
                             message: '登陆成功',
                             type: 'success'
-                        })
-                        // this.$router.go(0)
-                        await this.$router.push('/blog/home')
-                    } else {
-                        //重新获取验证码
-                        await this.captcha()
-                        //验证码获得焦点
-                        this.$refs.verifyCode.$el.querySelector('input').focus()
+                        });
+                        await this.$router.push('/blog/home');
                     }
                 } else {
-                    if (this.loginForm.RePassword === this.loginForm.password) ;
-                    else {
+                    if (this.loginForm.RePassword !== this.loginForm.password) {
                         ElNotification({
                             message: '两次输入的密码不相同',
                             type: 'error'

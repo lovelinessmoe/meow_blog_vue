@@ -1,9 +1,10 @@
+<!--文章首页展示的每个小卡片-->
 <template>
     <article class="post post-list">
         <div class="post-entry">
             <div class="feature">
                 <router-link :to="`article/${blog.articleId}`">
-                    <img src="https://s1.ax1x.com/2020/05/14/YDhagx.jpg"/>
+                    <img :src="this.blog.imgUrl?this.blog.imgUrl:'https://s2.loli.net/2022/04/05/3QmL6UklnaV9EP5.jpg'"/>
                 </router-link>
             </div>
             <h1 class="entry-title">

@@ -1,3 +1,4 @@
+<!--文章展示页面-->
 <template>
     <div class="articles">
         <banner :src="this.blog.imgUrl"></banner>
@@ -71,9 +72,7 @@
 
                     <!--声明-->
                     <div class="open-message">
-                        <p>声明：Gblog博客|版权所有，违者必究|如未注明，均为原创|本网站采用<a
-                                href="https://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank">BY-NC-SA</a>协议进行授权
-                        </p>
+                        <p>声明：Meow博客|版权所有，违者必究|如未注明，均为原创</p>
                         <p>转载：转载请注明原文链接</p>
                     </div>
                     <!--评论-->
@@ -161,6 +160,7 @@
             },
         },
         mounted() {
+            this.$store.commit('SET_LOADING', false);
         },
         updated() {
         },
@@ -186,7 +186,7 @@
         border-radius: 3px;
         padding: 15px;
         width: 300px;
-        transform: translateX(-120%) translateY(150px);
+        transform: translateX(260%) translateY(150px);
         font-size: 14px;
     }
 

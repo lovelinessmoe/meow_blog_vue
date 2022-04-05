@@ -18,8 +18,7 @@
         name: "LoadingPage",
         computed: {
             loading() {
-                // return this.$store.state.loading;
-                return false;
+                return this.$store.state.loading;
             }
         },
         watch: {
