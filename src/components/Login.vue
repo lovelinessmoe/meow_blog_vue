@@ -63,8 +63,8 @@
             return {
                 type: "login",
                 loginForm: {
-                    userName: 'love',
-                    password: '123456',
+                    userName: '',
+                    password: '',
                     email: '',
                     age: '',
                     telephone: '',

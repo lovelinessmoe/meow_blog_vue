@@ -4,14 +4,14 @@ import {removeUser} from '@/utils/token'
 import store from '@/store'
 
 const instance = axios.create({
-    baseURL: 'http://localhost:80',
-    // baseURL: 'http://192.168.2.167:80',
+    baseURL: process.env.VUE_APP_URL,
     timeout: 10000
 })
 
 // request拦截器
 instance.interceptors.request.use(config => {
-    console.dir(store.state.user)
+    console.log(process.env.VUE_APP_URL);
+    console.log(process.env.NODE_ENV);
     if (store.state.user) {
         config.headers.Authorization = store.state.user.token
     }
