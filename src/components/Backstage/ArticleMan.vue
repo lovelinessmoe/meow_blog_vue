@@ -56,13 +56,13 @@
 
         </avue-crud>
         <!--        <el-button type="danger" @click="editVisible=false" v-if="editVisible">Close</el-button>-->
-        <ArticleEdit v-bind:articleId="form.articleId" v-if="editVisible"
+        <ArticleEdit v-bind:articleId="form.articleId"
+                     v-bind:articleTitleDisable="articleTitleDisable" v-if="editVisible"
                      @close="editVisible=false"/>
     </div>
 </template>
 
 <script>
-    import '@vueup/vue-quill/dist/vue-quill.snow.css';
     import {add, update, remove, getList, getDetail, removeMany, switchTop} from "@/api/Backstage/article";
     import ArticleEdit from "@/components/Backstage/ArticleEdit";
 
@@ -121,6 +121,7 @@
                 },
                 selectionList: [],
                 editVisible: false,
+                articleTitleDisable: false,
             };
         },
         directives: {},
@@ -157,6 +158,7 @@
                 }
             },
             async editRow(row) {
+                this.articleTitleDisable = true;
                 this.editVisible = false;
                 this.$nextTick(() => {
                     this.form = row;
@@ -167,6 +169,7 @@
                 await this.$router.push("/blog/article/" + row.articleId);
             },
             addRow() {
+                this.articleTitleDisable = false;
                 this.editVisible = false;
                 this.$nextTick(() => {
                     this.form = {};

@@ -1,5 +1,5 @@
 <template>
-    <el-form :model="formData" ref="vForm" :rules="rules" label-position="left" label-width="80px"
+    <el-form label-position="left" label-width="80px"
              size="default" @submit.prevent style="height: 100%">
         <el-card class="box-card" style="height: 100%" shadow="always" body-style="height: 100%">
             <template #header>
@@ -7,7 +7,8 @@
                     <el-row>
                         <el-col :span="20" class="grid-cell">
                             <el-form-item label="以后想用来访问的地址" prop="" label-width="auto">
-                                <el-input v-model="blogForm.articleId" type="text" clearable></el-input>
+                                <el-input :disabled="articleTitleDisable" v-model="blogForm.articleId" type="text"
+                                          clearable></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="4" class="grid-cell">
@@ -30,13 +31,23 @@
                 </div>
             </template>
 
-            <QuillEditor ref="myEditor"
+            <!--<QuillEditor ref="myEditor"
                          :style="{'background-image': `url(${blogForm.imgUrl})`}"
                          style="background-repeat:no-repeat;background-size:contain;
                          background-position: right;height: 450px;"
                          theme="snow"
+                         :modules="quillModules"
                          :options="editorOption"
-                         @ready="editReady(quill)"/>
+                         @ready="editReady(quill)"/>-->
+
+            <div class="in-editor-wrapper">
+                <div id="editor"
+                ></div>
+                <!--:style="{'background-image': `url(${blogForm.imgUrl})`}"
+                style="background-repeat:no-repeat;background-size:contain;
+                    background-position: right;height: 450px;"-->
+            </div>
+
             <el-button type="primary" @click="submitForm()">保存</el-button>
             <el-button type="danger" @click="this.$emit('close');">取消</el-button>
         </el-card>
@@ -56,19 +67,33 @@
 </template>
 
 <script>
-    import {QuillEditor} from '@vueup/vue-quill'
-    import '@vueup/vue-quill/dist/vue-quill.snow.css';
+    // 引入原始组件
+    import Quill from 'quill'
+    // 引入核心样式和主题样式
+    import 'quill/dist/quill.core.css'
+    import 'quill/dist/quill.snow.css'
     import {saveOrUpdateArticle, getDetail} from "@/api/Backstage/article";
     import {ElNotification} from 'element-plus'
     import CropperImage from "@/components/Img/CropperImage";
+    // import { ICON_SVGS } from 'components/in-editor/ui/icon'
+    import QuillBetterTable from 'quill-better-table'
+    import 'quill-better-table/dist/quill-better-table.css'
 
+    Quill.register({
+        'modules/better-table': QuillBetterTable
+    }, true)
 
     export default {
         name: "ArticleEdit",
-        components: {QuillEditor, CropperImage},
-        props: ['articleId'],
+        components: {CropperImage},
+        props: ['articleId', 'articleTitleDisable'],
         emits: ['close'],
         created() {
+        },
+        mounted() {
+            // 初始化编辑器
+            this.editor = new Quill('#editor', this.options);
+            this.getArticleDetail();
         },
         data() {
             return {
@@ -78,79 +103,87 @@
                     articleTitle: '',
                     articleShort: '',
                 },
-                editorOption: {
-                    placeholder: '说些什么吧...',
+                // 待初始化的编辑器
+                editor: null,
+                // 配置参数
+                options: {
+                    theme: 'snow',
                     modules: {
+                        // 工具栏的具体配置
                         toolbar: {
                             container: [
-                                ['bold', 'italic', 'underline'], //加粗，斜体，下划线，删除线
-                                ['code-block'], //引用，代码块
-                                [{
-                                    'header': 1
-                                }, {
-                                    'header': 2
-                                }], // 标题，键值对的形式；1、2表示字体大小
-                                [{
-                                    'header': [1, 2, 3, 4, 5, 6, false]
-                                }], //几级标题
-                                [{
-                                    'color': []
-                                }, {
-                                    'background': []
-                                }], // 字体颜色，字体背景颜色
-                                [{
-                                    'align': []
-                                }], //对齐方式
-                                ['clean'], //清除字体样式
-                                ['link', 'image', 'video'] //上传图片、上传视频
+                                ['bold', 'italic', 'underline', 'strike'],
+                                ['blockquote', 'code-block'],
+                                [{'list': 'ordered'}, {'list': 'bullet'}],
+                                [{'script': 'super'}],
+                                [{'indent': '-1'}, {'indent': '+1'}],
+                                [{'size': ['small', false, 'large', 'huge']}],
+                                [{'header': [1, 2, 3, 4, 5, 6, false]}],
+                                [{'color': []}, {'background': []}],
+                                [{'align': []}],
+                                ['link', 'image']
                             ],
                             handlers: {
-                                'image': function (value) {
-                                    if (value) {
-                                        // 触发input框选择图片文件
-                                        document.querySelector(".quill-img input").click();
-                                    } else {
-                                        this.quill.format("image", false);
+                                'table': function () {
+                                    console.log(this.quill)
+                                    this.quill.getModule('better-table').insertTable(3, 3)
+                                },
+                            },
+                        },
+                        // 表格功能
+                        table: false,
+                        'better-table': {
+                            operationMenu: {
+                                items: {
+                                    unmergeCells: {
+                                        text: 'Another unmerge cells name'
                                     }
+                                },
+                                background: {
+                                    color: '#333'
+                                },
+                                color: {
+                                    colors: ['green', 'red', 'yellow', 'blue', 'white'],
+                                    text: 'background:'
                                 }
                             }
                         },
-                    }
+                        keyboard: {
+                            bindings: QuillBetterTable.keyboardBindings
+                        }
+                    },
+                    placeholder: '请输入内容 ...'
                 },
                 cropperModel: false,
-
             }
         },
         methods: {
-            async editReady() {
-                await this.getArticleDetail();
-            },
             async submitForm() {
-                this.blogForm.articleContent = this.$refs.myEditor.getHTML();
+                // this.blogForm.articleContent = this.editor.container.innerHTML
+                this.blogForm.articleContent = document.querySelector('#editor').children[0].innerHTML
                 const res = await saveOrUpdateArticle(this.blogForm)
                 if (res.success) {
                     ElNotification({
-                        message: '添加成功',
+                        message: '成功',
                         type: 'success'
                     })
                     this.$emit('close');
                 }
             },
-            onContentChange(content) {
-                this.blogForm.articleContent = content
-            },
             async getArticleDetail() {
                 if (this.articleId !== undefined) {
                     let res = await getDetail(this.articleId)
                     this.blogForm = res.data;
-                    this.$refs.myEditor.setHTML(this.blogForm.articleContent)
+                    // 将数据库传入的HTML内容转换成编辑器识别的delta对象
+                    let delta = this.editor.clipboard.convert({html: this.blogForm.articleContent})
+
+                    // 编辑器的内容需要接收delta对象
+                    this.editor.setContents(delta)
                 }
             },
             //封面设置
-            uploadPicture(name) {
-                this.cropperName = name;
+            uploadPicture() {
                 this.cropperModel = true;
-
             },
             //图片上传成功后
             handleUploadSuccess(data) {
@@ -158,53 +191,10 @@
                 this.cropperModel = false;
             }
         },
+
     }
 </script>
 
 <style scoped>
-    .upload-list-cover {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        padding: 0 40px;
-        align-items: center;
-        background: rgba(0, 0, 0, .6);
-        opacity: 0;
-        transition: opacity 1s;
-    }
 
-    .cover_icon {
-        font-size: 30px;
-    }
-
-    .upload-btn {
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        justify-content: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-        border: 1px solid #cccccc;
-        border-radius: 5px;
-        overflow: hidden;
-        box-shadow: 0 0 1px #cccccc;
-    }
-
-    .upload-btn:hover {
-        border: 1px solid #69b7ed;
-    }
-
-    .upload-btn i {
-        margin: 5px;
-    }
 </style>

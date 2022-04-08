@@ -10,6 +10,7 @@ import moment from 'moment'
 import '@/assets/css/style.less'
 import '@/assets/font/iconfont.css'
 import store from '@/store'
+import _ from 'lodash'
 
 const app = createApp(App)
 app.use(Avue, {size: 'small',});
@@ -17,6 +18,8 @@ app.use(router)
 app.use(store)
 app.use(moment)
 app.config.globalProperties.$moment = moment
+app.use(_)
+app.config.globalProperties.$_ = _
 app.use(ElementPlus)
 app.config.silent = true
 // 统一注册el-icon图标
