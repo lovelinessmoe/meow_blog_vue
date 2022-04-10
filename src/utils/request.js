@@ -10,8 +10,6 @@ const instance = axios.create({
 
 // request拦截器
 instance.interceptors.request.use(config => {
-    console.log(process.env.VUE_APP_URL);
-    console.log(process.env.NODE_ENV);
     if (store.state.user) {
         config.headers.Authorization = store.state.user.token
     }

@@ -59,7 +59,7 @@
                     href: 'https://github.com/lovelinessmoe'
                 }],
                 slogan: '苟利国家生死以',
-                avatar: '@/assets/img/logo.png'
+                avatar: '@/assets/img/logo.svg'
             }
         },
         props: {

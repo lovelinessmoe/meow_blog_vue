@@ -71,7 +71,13 @@
         components: {
             VueCropper
         },
-        props: {fixedNumber: {default: () => [1, 1]}},
+        props: {
+            fixedNumber: {default: () => [1, 1]},
+            url: {type: String}
+        },
+        created() {
+            this.option.img = this.url;
+        },
         emits: ['upload-img-success'],
         data() {
             return {
@@ -107,7 +113,6 @@
             //初始化函数
             imgLoad(msg) {
                 console.log(msg);
-
             },
             //图片缩放
             changeScale(num) {
@@ -172,6 +177,7 @@
                                     message: '上传成功',
                                     type: 'success'
                                 })
+                                //上传成功后返回父组件
                                 that.$emit('upload-img-success', data);
                             }
                         }

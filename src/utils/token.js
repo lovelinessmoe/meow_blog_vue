@@ -10,7 +10,7 @@ export function getUser() {
     try {
         user = JSON.parse(localStorage.user);
     } catch (e) {
-        console.log('用户未登陆');
+        console.log("用户未登陆")
     }
     return user;
 }

@@ -31,6 +31,16 @@ export const register = (loginUser) => {
         method: 'post',
         data: loginUser,
         params: {
+            code: loginUser.mailCode
+        }
+    })
+}
+export const getEmail = (loginUser) => {
+    return request({
+        url: '/auth/mail',
+        method: 'post',
+        data: loginUser,
+        params: {
             captchaVerification: loginUser.captchaVerification,
             code: loginUser.verifyCode
         }

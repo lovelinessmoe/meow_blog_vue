@@ -19,7 +19,16 @@
                         </div>
                     </header>
                     <!-- 正文输出 -->
-                    <div class="entry-content" v-html="blog.articleContent">
+                    <!--                    <div class="entry-content" v-html="blog.articleContent"></div>-->
+                    <div class="entry-content">
+                        <mavon-editor
+                                style="z-index: 0;"
+                                v-model="blog.articleContent"
+                                :ishljs="true" :boxShadow="false"
+                                :subfield="false" defaultOpen="preview"
+                                :editable="false" :toolbarsFlag="false"
+                                :scrollStyle="true"
+                        />
                     </div>
                     <!-- 文章底部 -->
                     <section-title>
@@ -132,7 +141,8 @@
                 let arr = []
                 for (let i = 6; i > 0; i--) {
                     let temp = []
-                    let e = document.querySelector(".entry-content").querySelectorAll(`h${i}`)
+                    // let e = document.querySelector(".entry-content").querySelectorAll(`h${i}`)
+                    let e = document.querySelector(".v-note-show").querySelectorAll(`h${i}`)
                     for (let j = 0; j < e.length; j++) {
                         let child = this.fetchH(arr, e[j].offsetTop, (j + 1 === e.length) ? undefined : e[j + 1].offsetTop)
                         e[j].setAttribute("id", e[j].innerText);
@@ -153,7 +163,6 @@
             async getBlog() {
                 let res = await getBlogDetail(this.$route.params.id);
                 this.blog = res.data;
-                this.bannerShow=true;
                 this.$nextTick(function () {
                     this.createMenus();
                 })
@@ -164,7 +173,7 @@
         },
         updated() {
         },
-        async created() {
+        created() {
             this.getBlog();
             // this.getComment()
         },
@@ -185,8 +194,8 @@
         box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
         border-radius: 3px;
         padding: 15px;
-        width: 300px;
-        transform: translateX(260%) translateY(150px);
+        width: 200px;
+        transform: translateX(-110%) translateY(150px);
         font-size: 14px;
     }
 
@@ -223,6 +232,7 @@
         }
 
         .entry-content {
+
         }
 
         footer.post-footer {

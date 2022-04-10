@@ -12,7 +12,8 @@
                             </el-form-item>
                         </el-col>
                         <el-col :span="4" class="grid-cell">
-                            <el-button type="primary" @click="uploadPicture('flagImg')" style="width: 100%;">上传封面
+                            <el-button type="primary" @click="uploadPicture('flagImg')" style="width: 100%;">
+                                <span>封面</span>
                             </el-button>
                         </el-col>
                     </el-row>
@@ -31,22 +32,9 @@
                 </div>
             </template>
 
-            <!--<QuillEditor ref="myEditor"
-                         :style="{'background-image': `url(${blogForm.imgUrl})`}"
-                         style="background-repeat:no-repeat;background-size:contain;
-                         background-position: right;height: 450px;"
-                         theme="snow"
-                         :modules="quillModules"
-                         :options="editorOption"
-                         @ready="editReady(quill)"/>-->
-
-            <div class="in-editor-wrapper">
-                <div id="editor"
-                ></div>
-                <!--:style="{'background-image': `url(${blogForm.imgUrl})`}"
-                style="background-repeat:no-repeat;background-size:contain;
-                    background-position: right;height: 450px;"-->
-            </div>
+            <mavon-editor
+                    :toolbars="markdownOption"
+                    v-model="blogForm.articleContent"/>
 
             <el-button type="primary" @click="submitForm()">保存</el-button>
             <el-button type="danger" @click="this.$emit('close');">取消</el-button>
@@ -59,6 +47,7 @@
             v-model="cropperModel"
             fullscreen="fullscreen">
         <cropper-image
+                :url="blogForm.imgUrl?blogForm.imgUrl:''"
                 :fixedNumber="[16,9]"
                 @upload-img-success="handleUploadSuccess">
         </cropper-image>
@@ -67,21 +56,10 @@
 </template>
 
 <script>
-    // 引入原始组件
-    import Quill from 'quill'
-    // 引入核心样式和主题样式
-    import 'quill/dist/quill.core.css'
-    import 'quill/dist/quill.snow.css'
+    import 'mavon-editor/dist/css/index.css'
     import {saveOrUpdateArticle, getDetail} from "@/api/Backstage/article";
     import {ElNotification} from 'element-plus'
     import CropperImage from "@/components/Img/CropperImage";
-    // import { ICON_SVGS } from 'components/in-editor/ui/icon'
-    import QuillBetterTable from 'quill-better-table'
-    import 'quill-better-table/dist/quill-better-table.css'
-
-    Quill.register({
-        'modules/better-table': QuillBetterTable
-    }, true)
 
     export default {
         name: "ArticleEdit",
@@ -91,8 +69,6 @@
         created() {
         },
         mounted() {
-            // 初始化编辑器
-            this.editor = new Quill('#editor', this.options);
             this.getArticleDetail();
         },
         data() {
@@ -103,64 +79,47 @@
                     articleTitle: '',
                     articleShort: '',
                 },
-                // 待初始化的编辑器
-                editor: null,
                 // 配置参数
-                options: {
-                    theme: 'snow',
-                    modules: {
-                        // 工具栏的具体配置
-                        toolbar: {
-                            container: [
-                                ['bold', 'italic', 'underline', 'strike'],
-                                ['blockquote', 'code-block'],
-                                [{'list': 'ordered'}, {'list': 'bullet'}],
-                                [{'script': 'super'}],
-                                [{'indent': '-1'}, {'indent': '+1'}],
-                                [{'size': ['small', false, 'large', 'huge']}],
-                                [{'header': [1, 2, 3, 4, 5, 6, false]}],
-                                [{'color': []}, {'background': []}],
-                                [{'align': []}],
-                                ['link', 'image']
-                            ],
-                            handlers: {
-                                'table': function () {
-                                    console.log(this.quill)
-                                    this.quill.getModule('better-table').insertTable(3, 3)
-                                },
-                            },
-                        },
-                        // 表格功能
-                        table: false,
-                        'better-table': {
-                            operationMenu: {
-                                items: {
-                                    unmergeCells: {
-                                        text: 'Another unmerge cells name'
-                                    }
-                                },
-                                background: {
-                                    color: '#333'
-                                },
-                                color: {
-                                    colors: ['green', 'red', 'yellow', 'blue', 'white'],
-                                    text: 'background:'
-                                }
-                            }
-                        },
-                        keyboard: {
-                            bindings: QuillBetterTable.keyboardBindings
-                        }
-                    },
-                    placeholder: '请输入内容 ...'
+                markdownOption: {
+                    bold: true, // 粗体
+                    italic: true, // 斜体
+                    header: true, // 标题
+                    underline: true, // 下划线
+                    strikethrough: true, // 中划线
+                    mark: true, // 标记
+                    superscript: true, // 上角标
+                    subscript: true, // 下角标
+                    quote: true, // 引用
+                    ol: true, // 有序列表
+                    ul: true, // 无序列表
+                    link: true, // 链接
+                    imagelink: true, // 图片链接
+                    code: true, // code
+                    table: true, // 表格
+                    fullscreen: true, // 全屏编辑
+                    readmodel: true, // 沉浸式阅读
+                    htmlcode: true, // 展示html源码
+                    help: true, // 帮助
+                    /* 1.3.5 */
+                    undo: true, // 上一步
+                    redo: true, // 下一步
+                    trash: true, // 清空
+                    save: true, // 保存（触发events中的save事件）
+                    /* 1.4.2 */
+                    navigation: true, // 导航目录
+                    /* 2.1.8 */
+                    alignleft: true, // 左对齐
+                    aligncenter: true, // 居中
+                    alignright: true, // 右对齐
+                    /* 2.2.1 */
+                    subfield: true, // 单双栏模式
+                    preview: true, // 预览
                 },
                 cropperModel: false,
             }
         },
         methods: {
             async submitForm() {
-                // this.blogForm.articleContent = this.editor.container.innerHTML
-                this.blogForm.articleContent = document.querySelector('#editor').children[0].innerHTML
                 const res = await saveOrUpdateArticle(this.blogForm)
                 if (res.success) {
                     ElNotification({
@@ -175,10 +134,7 @@
                     let res = await getDetail(this.articleId)
                     this.blogForm = res.data;
                     // 将数据库传入的HTML内容转换成编辑器识别的delta对象
-                    let delta = this.editor.clipboard.convert({html: this.blogForm.articleContent})
-
-                    // 编辑器的内容需要接收delta对象
-                    this.editor.setContents(delta)
+                    // let delta = this.editor.clipboard.convert({html: this.blogForm.articleContent})
                 }
             },
             //封面设置

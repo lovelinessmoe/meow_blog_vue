@@ -1,0 +1,76 @@
+<?xml version="1.0" standalone="no"?>
+<svg class="icon" viewBox="0 0 200 50" version="1.1" xmlns="http://www.w3.org/2000/svg"
+     id="Meow" width="1024" height="1024">
+	<g transform="translate(0, 0)">
+		<g class="name-imagesvg">
+			<g>
+				<rect fill="#333" fill-opacity="0" stroke-width="2" x="0" y="0" width="50" height="50"
+				      class="image-rect"/>
+				<svg x="0" y="0" width="50" height="50" class="image-svg-svg primary"
+				     style="overflow: visible;">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 468 468">
+						<path d="M250 333.36l-14 19.09a2.44 2.44 0 0 1-3.92 0L218 333.36 31.69 80.54v358.21a2.44 2.44 0 0 1-4.88 0V73.12a2.44 2.44 0 0 1 4.4-1.44L221 329.29l13 17.6 13-17.6L234 312 0 0v468h351z"
+						      fill="#fd2965" opacity=".7"/>
+						<path d="M234 312l-13 17.29 13 17.6 13-17.6L436.79 71.68a2.44 2.44 0 0 1 4.4 1.44v380.26a2.44 2.44 0 0 1-4.88 0V80.54L250 333.36l-14 19.09a2.44 2.44 0 0 1-3.92 0L218 333.36 117 468h351V0z"
+						      fill="#fa991a" opacity=".7"/>
+					</svg>
+				</svg> <!---->
+			</g>
+		</g>
+	</g>
+	<g transform="translate(50, 0)">
+		<g class="name-imagesvg">
+			<g>
+				<rect fill="#333" fill-opacity="0" stroke-width="2" x="0" y="0" width="50" height="50"
+				      class="image-rect"/>
+				<svg x="0" y="0" width="50" height="50"
+				     class="image-svg-svg primary" style="overflow: visible;">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 408.69 468.81">
+						<path d="M408.69 468L0 468.81V.81L351.81 0l-1.62 117h-175.5v84.81l-143.94.49-.11-26.8-.57-143h290.06a2.44 2.44 0 0 0 0-4.88H27.63a2.44 2.44 0 0 0-2.44 2.45l.58 145.43.46 117 .58 145.5a2.45 2.45 0 0 0 2.44 2.43h351a2.44 2.44 0 1 0 0-4.88H31.68l-.57-143-.34-85.32 143.92-.5V351l233.19-2.44z"
+						      fill="#6228f1" opacity=".7"/>
+						<path d="M291.69 175.5v117H31.11l-.34-85.32 143.92-.5 88.57-.3a2.44 2.44 0 0 0 0-4.88l-88.55.31-143.94.49-.11-26.8h261.03zM0 175.5v117h26.23l-.46-117z"
+						      fill="#2f97dd" opacity=".7"/>
+					</svg>
+				</svg> <!---->
+			</g>
+		</g>
+	</g>
+	<g transform="translate(100, 0)">
+		<g class="name-imagesvg">
+			<g>
+				<rect fill="#333" fill-opacity="0" stroke-width="2" x="0" y="0" width="50" height="50"
+				      class="image-rect"/>
+				<svg x="0" y="0" width="50" height="50" class="image-svg-svg primary"
+				     style="overflow: visible;">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 468 468">
+						<path d="M234 0C104.77 0 0 104.77 0 234s104.77 234 234 234 234-104.77 234-234S363.23 0 234 0zm-7.31 441.19c-110.21 0-199.88-89.67-199.88-199.88S116.48 41.44 226.69 41.44c81.78 0 152.23 49.37 183.14 119.87a200 200 0 0 1-183.14 279.88z"
+						      fill="#fd2965" opacity=".7"/>
+						<path d="M396.84 146.16a195.13 195.13 0 0 0-170.15-99.85c-107.53 0-195 87.48-195 195s87.47 195 195 195a194.91 194.91 0 0 0 170.15-290.15z"
+						      fill="#fd2965" opacity=".7"/>
+						<path d="M396.84 146.16a146.23 146.23 0 1 0-25.26 225.51 194.61 194.61 0 0 0 25.26-225.51z"
+						      fill="#f9d611" opacity=".7"/>
+						<path d="M409.83 161.31a199.53 199.53 0 0 1-22.22 198.41 146.25 146.25 0 0 0 22.22-198.41z"
+						      fill="#f9d611" opacity=".7"/>
+					</svg>
+				</svg> <!---->
+			</g>
+		</g>
+	</g>
+	<g transform="translate(150, 0)">
+		<g class="name-imagesvg">
+			<g>
+				<rect fill="#333" fill-opacity="0" stroke-width="2" x="0" y="0" width="50" height="50"
+				      class="image-rect"/>
+				<svg x="0" y="0" width="50" height="50"
+				     class="image-svg-svg primary" style="overflow: visible;">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 482.63 468">
+						<path d="M265.94 273.26L279.17 310 482.62 0H0l175.5 468 83.76-127.64 16.56-25.24-13.12-36.46-16.36 27.26-54.12 90.21a2.44 2.44 0 0 1-2.09 1.18h-.2a2.44 2.44 0 0 1-2.07-1.52L41.61 30.16a2.44 2.44 0 0 1 4.53-1.82l144.42 361.07 53.6-89.32 16.41-27.35-87.36-242.66a2.44 2.44 0 0 1 4.58-1.66l86 238.92L407.41 28a2.44 2.44 0 1 1 4.18 2.5z"
+						      fill="#fd2965" opacity=".7"/>
+						<path d="M131.62 0l112.54 300.09 16.41-27.35-87.36-242.66a2.44 2.44 0 0 1 4.58-1.66l86 238.92L407.41 28a2.44 2.44 0 1 1 4.18 2.5L265.94 273.26 279.17 310l28.15 78.2 41.44-96.69a2.44 2.44 0 1 1 4.48 1.92l-43.87 102.4a2.44 2.44 0 0 1-2.24 1.48h-.08a2.44 2.44 0 0 1-2.22-1.61l-29-80.58-13.13-36.46-16.36 27.26 12.92 34.44L307.12 468 482.62 0z"
+						      fill="#2f97dd" opacity=".7"/>
+					</svg>
+				</svg> <!---->
+			</g>
+		</g>
+	</g>
+</svg>

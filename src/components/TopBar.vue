@@ -3,8 +3,8 @@
          @click.stop="mobileShow=false">
         <div class="site-logo">
             <router-link to="/blog/home">
-                <img src="@/assets/img/logo.png" alt="">
-                <p class="site-name">MeowBlog</p>
+                <img src="@/assets/img/logo.svg" alt="">
+                <!--                <p class="site-name">MeowBlog</p>-->
             </router-link>
         </div>
         <div class="menus-btn" @click.stop="mobileShow=!mobileShow">
@@ -99,8 +99,8 @@
                 await removeUser();
             },
             async switchUser() {
-                await removeUser();
                 await logout();
+                await removeUser();
                 await this.$router.push("/login");
             },
             watchScroll() {
@@ -151,8 +151,8 @@
         text-align: center;
 
         img {
-            width: 60px;
-            height: 60px;
+            width: 120px;
+            height: 120px;
         }
 
         p.site-name {

@@ -14,11 +14,11 @@
                 </el-form-item>
                 <el-form-item prop="password">
                     <el-input v-model="loginForm.password" placeholder="请输入登录密码"
-                              prefix-icon="Lock"></el-input>
+                              prefix-icon="Lock" type="password"></el-input>
                 </el-form-item>
                 <el-form-item prop="password" v-if="type === 'register'">
                     <el-input v-model="loginForm.RePassword" placeholder="请重复输入一次登录密码"
-                              prefix-icon="Lock"></el-input>
+                              prefix-icon="Lock" type="password"></el-input>
                 </el-form-item>
                 <el-form-item prop="email" v-if="type === 'register'">
                     <el-input v-model="loginForm.email" placeholder="请输入邮箱"
@@ -37,7 +37,17 @@
                         <el-input v-model="loginForm.verifyCode" placeholder="请输入验证码"
                                   prefix-icon="Grid"
                                   class="verifyCode" ref="verifyCode"></el-input>
-                        <img v-bind:src="captchaImg" class="verifyCode_img" @click="captcha">
+                        <img v-bind:src="captchaImg" class="verifyCode_img" @click="captcha" alt="你瞅啥">
+                    </div>
+                </el-form-item>
+                <el-form-item prop="mailCode" v-if="type === 'register'">
+                    <div class="email_box">
+                        <el-input v-model="loginForm.mailCode" placeholder="请输入邮箱验证码"
+                                  prefix-icon="Watermelon"
+                                  class="mailCode" ref="mailCode"></el-input>
+                        <el-button type="primary" class="email_button" @click="getEmailCode()"
+                                   :disabled="!loginForm.verifyCode">获取邮箱验证码
+                        </el-button>
                     </div>
                 </el-form-item>
                 <el-form-item class="login_btn">
@@ -53,7 +63,7 @@
 </template>
 
 <script>
-    import {login, captcha, register} from '@/api/login'
+    import {login, captcha, register, getEmail} from '@/api/login'
     import {ElNotification} from 'element-plus'
     import {setUser} from "@/utils/token";
 
@@ -70,7 +80,8 @@
                     telephone: '',
                     verifyCode: '',
                     captchaVerification: '',
-                    RePassword: ''
+                    RePassword: '',
+                    mailCode: ''
                 },
                 captchaImg: null,
                 loginRules: {
@@ -162,6 +173,27 @@
                 this.captchaImg = captchaRes.data.img
                 this.loginForm.captchaVerification = captchaRes.data.captchaVerification
                 this.loginForm.verifyCode = ''
+            },
+            async getEmailCode() {
+                if (this.loginForm.userName === '' || this.loginForm.email === '' || this.loginForm.verifyCode === '') {
+                    ElNotification({
+                        message: '请输入用户名或邮箱或验证码',
+                        type: 'error'
+                    })
+                    return false;
+                }
+                let res = await getEmail(this.loginForm);
+                if (res.success) {
+                    ElNotification({
+                        message: '发送成功',
+                        type: 'success'
+                    })
+                } else {
+                    //重新获取验证码
+                    await this.captcha()
+                    //验证码获得焦点
+                    this.$refs.verifyCode.$el.querySelector('input').focus()
+                }
             }
         }
     }
@@ -202,6 +234,22 @@
                 }
 
                 .verifyCode_img {
+                    width: 50%;
+                    height: 30px;
+                    justify-content: flex-end;
+                }
+            }
+
+            .email_box {
+                width: 100%;
+                display: flex;
+
+                .mailCode {
+                    width: 50%;
+                    justify-content: left;
+                }
+
+                .email_button {
                     width: 50%;
                     height: 30px;
                     justify-content: flex-end;
