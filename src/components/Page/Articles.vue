@@ -86,9 +86,16 @@
                     </div>
                     <!--评论-->
                     <div class="comments">
-                        <comment v-for="item in comments" :key="item.comment.id" :comment="item.comment">
-                            <template v-if="item.reply.length">
-                                <comment v-for="reply in item.reply" :key="reply.id" :comment="reply"></comment>
+
+                        <mavon-editor style="z-index: 0;" v-model="this.replyComment.content"/>
+                        <el-button type="success" icon="Check" circle @click="submitReply"
+                                   style="float: right; position: relative;top: -32px;z-index: 1;"/>
+
+                        <comment v-for="item in comments" :key="item.commentId" :comment="item"
+                                 @refreshComment="this.getComment">
+                            <template v-if="item.children?item.children.length:false">
+                                <comment v-for="reply in item.children" :key="reply.commentId"
+                                         :comment="reply"/>
                             </template>
                         </comment>
                     </div>
@@ -99,11 +106,13 @@
 </template>
 
 <script>
-    import Banner from '@/components/BannerView'
-    import sectionTitle from '@/components/SectionTitle'
-    import comment from '@/components/CommentView'
-    import menuTree from '@/components/MenuTree'
+    import Banner from '@/components/components/BannerView'
+    import sectionTitle from '@/components/components/SectionTitle'
+    import comment from '@/components/components/CommentView'
+    import menuTree from '@/components/components/MenuTree'
     import {getBlogDetail} from "@/api/article";
+    import {addComment, getComment} from "@/api/comment";
+    import {ElNotification} from "element-plus";
 
     export default {
         name: 'ArticlesView',
@@ -113,6 +122,12 @@
                 comments: [],
                 menus: [],
                 blog: {},
+                replyComment: {
+                    articleId: this.$route.params.id,
+                    content: '',
+                    level: '0',
+                    pid: '0',
+                },
             }
         },
         components: {
@@ -122,13 +137,10 @@
             menuTree
         },
         methods: {
-            /*getComment(){
-                fetchComment().then(res => {
-                    this.comments = res.data || []
-                }).catch(err => {
-                    console.log(err)
-                })
-            },*/
+            async getComment() {
+                let res = await getComment(this.$route.params.id);
+                this.comments = res.data || [];
+            },
             fetchH(arr, left, right) {
                 if (right) {
                     return arr.filter(item => item.offsetTop > left && item.offsetTop < right)
@@ -167,6 +179,16 @@
                     this.createMenus();
                 })
             },
+            async submitReply() {
+                let res = await addComment(this.replyComment);
+                if (res.success) {
+                    ElNotification({
+                        message: '成功',
+                        type: 'success'
+                    })
+                    this.getComment();
+                }
+            },
         },
         mounted() {
             this.$store.commit('SET_LOADING', false);
@@ -175,7 +197,7 @@
         },
         created() {
             this.getBlog();
-            // this.getComment()
+            this.getComment();
         },
     }
 </script>

@@ -13,7 +13,6 @@
     "@types/lodash-es": "^4.17.6",
     "axios": "^0.26.0",
     "bufferutil": "^4.0.6",
-    "comment-message-editor": "^1.0.1",
     "core-js": "^3.8.3",
     "element-plus": "^2.0.4",
     "fibers": "^5.0.1",

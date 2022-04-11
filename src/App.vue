@@ -5,8 +5,8 @@
 </template>
 
 <script>
-    import LoadingPage from "@/components/LoadingPage";
-    import TopBar from "@/components/TopBar";
+    import LoadingPage from "@/components/components/LoadingPage";
+    import TopBar from "@/components/components/TopBar";
     import BlogPage from "@/components/BlogPage";
 
     export default {

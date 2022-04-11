@@ -47,28 +47,45 @@
                            plain
                            @click.stop="viewRow(row,index)">查看
                 </el-button>
+                <el-button type="text"
+                           icon="chat-line-round"
+                           size="default"
+                           plain
+                           @click.stop="viewComment(row,index)">查看评论
+                </el-button>
             </template>
             <!--            自定义列-->
             <template #isTop="{row}">
                 <el-switch v-model="row.isTop" @change="switchTopStat(row.articleId)"/>
             </template>
-
-
         </avue-crud>
-        <!--        <el-button type="danger" @click="editVisible=false" v-if="editVisible">Close</el-button>-->
+
+
         <ArticleEdit v-bind:articleId="form.articleId"
                      v-bind:articleTitleDisable="articleTitleDisable" v-if="editVisible"
                      @close="editVisible=false"/>
+
+        <!-- 评论管理弹窗 -->
+        <el-dialog
+                title="查看评论"
+                v-model="commentModel"
+                v-if="commentModel"
+                fullscreen="fullscreen">
+
+            <CommentMan :articleId="articleId"></CommentMan>
+        </el-dialog>
+
     </div>
 </template>
 
 <script>
     import {add, update, remove, getList, getDetail, removeMany, switchTop} from "@/api/Backstage/article";
     import ArticleEdit from "@/components/Backstage/ArticleEdit";
+    import CommentMan from "@/components/Backstage/CommentMan";
 
     export default {
         name: "articleMan",
-        components: {ArticleEdit},
+        components: {CommentMan, ArticleEdit},
         // components: {QuillEditor},
         data() {
             return {
@@ -122,6 +139,9 @@
                 selectionList: [],
                 editVisible: false,
                 articleTitleDisable: false,
+                commentModel: false,
+                //查看评论时使用的查询条件
+                articleId: '',
             };
         },
         directives: {},
@@ -167,6 +187,10 @@
             },
             async viewRow(row) {
                 await this.$router.push("/blog/article/" + row.articleId);
+            },
+            async viewComment(row) {
+                this.articleId = row.articleId;
+                this.commentModel = true;
             },
             addRow() {
                 this.articleTitleDisable = false;

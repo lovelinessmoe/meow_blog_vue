@@ -39,7 +39,7 @@
     </div>
 </template>
 <script>
-    import sectionTitle from '@/components/SectionTitle'
+    import sectionTitle from '@/components/components/SectionTitle'
     // import {getTime,getTimeInterval} from '@/utils'
     // import Quote from "@/components/quote";
     // import {fetchFriend} from '../api'

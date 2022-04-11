@@ -68,7 +68,7 @@
 
 <script>
     import {logout} from "@/api/login";
-    import HeaderSearch from "@/components/HeaderSearch";
+    import HeaderSearch from "@/components/components/HeaderSearch";
     import {removeUser} from "@/utils/token";
 
     export default {

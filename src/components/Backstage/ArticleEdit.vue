@@ -59,7 +59,7 @@
     import 'mavon-editor/dist/css/index.css'
     import {saveOrUpdateArticle, getDetail} from "@/api/Backstage/article";
     import {ElNotification} from 'element-plus'
-    import CropperImage from "@/components/Img/CropperImage";
+    import CropperImage from "@/components/components/cropperImg/CropperImage";
 
     export default {
         name: "ArticleEdit",

@@ -44,11 +44,11 @@
 
 <script>
     import {getList} from "@/api/article";
-    import Banner from "@/components/BannerView";
-    import Feature from '@/components/FeatureCard'
-    import sectionTitle from '@/components/SectionTitle'
-    import BlogCard from '@/components/BlogCard'
-    import SmallIco from '@/components/SmallIco'
+    import Banner from "@/components/components/BannerView";
+    import Feature from '@/components/components/FeatureCard'
+    import sectionTitle from '@/components/components/SectionTitle'
+    import BlogCard from '@/components/components/BlogCard'
+    import SmallIco from '@/components/components/SmallIco'
 
     export default {
         name: "HomePage",

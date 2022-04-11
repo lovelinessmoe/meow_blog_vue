@@ -7,7 +7,7 @@
 
 <script>
 
-    import BackTop from "@/components/BackToTheTop";
+    import BackTop from "@/components/components/BackToTheTop";
 
     export default {
         name: "BlogPage",
