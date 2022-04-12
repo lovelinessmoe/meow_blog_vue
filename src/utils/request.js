@@ -31,7 +31,8 @@ instance.interceptors.response.use(response => {
         //登陆过期
         if (res.code === 2002) {
             removeUser()
-            window.location.href = '/login'
+            this.$router.push('/login')
+            // window.location.href = '/login'
         }
 
         // return Promise.reject(res)
