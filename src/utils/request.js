@@ -4,6 +4,9 @@ import {removeUser} from '@/utils/token'
 import store from '@/store'
 
 const instance = axios.create({
+    headers: {
+        'Content-Security-Policy': 'upgrade-insecure-requests'
+    },
     baseURL: process.env.VUE_APP_URL ? process.env.VUE_APP_URL : 'http://javaee.xyz:8088',
     timeout: 10000
 })
