@@ -26,9 +26,6 @@
                 </div>
             </div>
             <div class="menu-item">
-                <router-link to="/blog/friend">友链</router-link>
-            </div>
-            <div class="menu-item">
                 <router-link to="/blog/about">关于</router-link>
             </div>
             <div class="menu-item hasChild"

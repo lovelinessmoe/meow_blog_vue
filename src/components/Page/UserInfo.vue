@@ -91,6 +91,10 @@
     import CropperImage from "@/components/components/cropperImg/CropperImage";
     import authCheck from '@/hooks/useCaptcha'
     import {ElNotification} from "element-plus";
+    import {logout} from "@/api/login";
+    import {removeUser} from "@/utils/token";
+    import router from '@/router'
+
 
     const {getCaptcha, captchaVal} = authCheck()
 
@@ -109,8 +113,9 @@
 
     //图片上传成功后
     function handleUploadSuccess(data) {
-        this.blogForm.imgUrl = 'http://oss.javaee.xyz/' + data.key;
-        this.cropperModel = false;
+        console.dir(data);
+        user.value.avatarUrl = 'http://oss.javaee.xyz/' + data.key;
+        cropperModel.value = false;
     }
 
     //邮箱
@@ -143,7 +148,14 @@
     async function updateUserInfo() {
         let res = await updateUserInfoApi(user.value, mailCode.value);
         if (res.success) {
+            ElNotification({
+                message: '修改成功，请重新登陆',
+                type: 'success'
+            })
             userCheckModel.value = false;
+            await logout();
+            await removeUser();
+            await router.push('/login')
         }
     }
 

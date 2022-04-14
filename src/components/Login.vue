@@ -128,6 +128,11 @@
                             type: 'success'
                         });
                         await this.$router.push('/blog/home');
+                    } else {
+                        //重新获取验证码
+                        await this.captcha()
+                        //验证码获得焦点
+                        this.$refs.verifyCode.$el.querySelector('input').focus()
                     }
                 } else {
                     if (this.loginForm.RePassword !== this.loginForm.password) {

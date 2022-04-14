@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p>Tags</p>
+        <p>建设中</p>
     </div>
 </template>
 

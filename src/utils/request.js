@@ -2,10 +2,11 @@ import axios from 'axios'
 import {ElNotification} from 'element-plus'
 import {removeUser} from '@/utils/token'
 import store from '@/store'
+import router from '@/router'
 
 const instance = axios.create({
-    baseURL: process.env.VUE_APP_URL ? process.env.VUE_APP_URL : 'https://javaee.xyz',
-    // baseURL: 'http://192.168.1.10:80',
+    // baseURL: process.env.VUE_APP_URL ? process.env.VUE_APP_URL : 'https://javaee.xyz',
+    baseURL: 'http://127.0.0.1:8088',
     timeout: 10000
 })
 
@@ -32,7 +33,8 @@ instance.interceptors.response.use(response => {
         //登陆过期
         if (res.code === 2002) {
             removeUser()
-            this.$router.push('/login')
+            // this.$router.push('/login')
+            router.push('/login')
             // window.location.href = '/login'
         }
 

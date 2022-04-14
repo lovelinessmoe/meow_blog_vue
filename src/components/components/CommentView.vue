@@ -3,7 +3,7 @@
     <div class="comment" :id="`comment${comment.commentId}`">
         <div class="comment-head">
             <div class="user-avatar"><img
-                    :src="comment.fromUserAvatar?comment.fromUserAvatar:'https://s2.loli.net/2022/04/05/3QmL6UklnaV9EP5.jpg'"
+                    :src="comment.avatarUrl?comment.avatarUrl:'https://s2.loli.net/2022/04/05/3QmL6UklnaV9EP5.jpg'"
                     alt=""></div>
             <div class="head-right">
                 <section-title>
