@@ -5,6 +5,7 @@ import store from '@/store'
 
 const instance = axios.create({
     baseURL: process.env.VUE_APP_URL ? process.env.VUE_APP_URL : 'https://javaee.xyz',
+    // baseURL: 'http://192.168.1.10:80',
     timeout: 10000
 })
 

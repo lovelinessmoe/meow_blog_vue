@@ -47,7 +47,7 @@
                 </div>
             </div>
             <div class="menu-item hasChild" v-if="this.$store.state.user">
-                <router-link to="/blog/userInfo">你好 {{this.$store.state.user.username}}</router-link>
+                <router-link to="/blog/userInfo">{{this.$store.state.user.username}}</router-link>
                 <div class="childMenu">
                     <div class="sub-menu">
                         <a @click="switchUser()">切换账号</a>

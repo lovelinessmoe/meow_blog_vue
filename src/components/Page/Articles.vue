@@ -85,11 +85,15 @@
                         <p>转载：转载请注明原文链接</p>
                     </div>
                     <!--评论-->
-                    <div class="comments">
-
-                        <mavon-editor style="z-index: 0;" v-model="this.replyComment.content"/>
-                        <el-button type="success" icon="Check" circle @click="submitReply"
-                                   style="float: right; position: relative;top: -32px;z-index: 1;"/>
+                    <div class="comments" style="text-align: center">
+                        <el-button v-if="!commentEdit" type="success" @click="commentEdit=true">
+                            留个言吧
+                        </el-button>
+                        <div v-else>
+                            <mavon-editor style="z-index: 0;" v-model="this.replyComment.content"/>
+                            <el-button type="success" icon="Check" circle @click="submitReply"
+                                       style="float: right; position: relative;top: -32px;z-index: 1;"/>
+                        </div>
 
                         <comment v-for="item in comments" :key="item.commentId" :comment="item"
                                  @refreshComment="this.getComment">
@@ -128,6 +132,7 @@
                     level: '0',
                     pid: '0',
                 },
+                commentEdit: false
             }
         },
         components: {
@@ -180,13 +185,20 @@
                 })
             },
             async submitReply() {
-                let res = await addComment(this.replyComment);
-                if (res.success) {
+                if (this.$store.state.user) {
+                    let res = await addComment(this.replyComment);
+                    if (res.success) {
+                        ElNotification({
+                            message: '成功',
+                            type: 'success'
+                        })
+                        await this.getComment();
+                    }
+                } else {
                     ElNotification({
-                        message: '成功',
-                        type: 'success'
+                        message: '请登录后操作',
+                        type: 'warning'
                     })
-                    this.getComment();
                 }
             },
         },
@@ -206,7 +218,8 @@
         position: relative;
 
         .site-main {
-            padding: 80px 0 0 0;
+            margin-top: -170px;
+            /*padding: -300px 0 0 0;*/
         }
     }
 
@@ -217,7 +230,7 @@
         border-radius: 3px;
         padding: 15px;
         width: 200px;
-        transform: translateX(-110%) translateY(150px);
+        transform: translateX(-240px) translateY(150px);
         font-size: 14px;
     }
 

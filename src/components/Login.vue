@@ -7,10 +7,9 @@
         <!--登录区域-->
         <div class="login_box">
             <el-form :model="loginForm" :rules="loginRules" ref="loginForm" class="login_form">
-
-                <el-form-item prop="username">
-                    <el-input v-model="loginForm.userName" placeholder="请输入用户名称"
-                              prefix-icon="User"></el-input>
+                <el-form-item prop="email">
+                    <el-input v-model="loginForm.email" placeholder="请输入邮箱"
+                              prefix-icon="Message"></el-input>
                 </el-form-item>
                 <el-form-item prop="password">
                     <el-input v-model="loginForm.password" placeholder="请输入登录密码"
@@ -20,17 +19,9 @@
                     <el-input v-model="loginForm.RePassword" placeholder="请重复输入一次登录密码"
                               prefix-icon="Lock" type="password"></el-input>
                 </el-form-item>
-                <el-form-item prop="email" v-if="type === 'register'">
-                    <el-input v-model="loginForm.email" placeholder="请输入邮箱"
-                              prefix-icon="Message"></el-input>
-                </el-form-item>
-                <el-form-item prop="age" v-if="type === 'register'">
-                    <el-input v-model="loginForm.age" placeholder="请输入年龄"
-                              prefix-icon="Coin"></el-input>
-                </el-form-item>
-                <el-form-item prop="telephone" v-if="type === 'register'">
-                    <el-input v-model="loginForm.telephone" placeholder="请输入手机号"
-                              prefix-icon="Cellphone"></el-input>
+                <el-form-item prop="username" v-if="type === 'register'">
+                    <el-input v-model="loginForm.userName" placeholder="请输入用户昵称"
+                              prefix-icon="User"></el-input>
                 </el-form-item>
                 <el-form-item prop="verifyCode">
                     <div class="verifyCode_box">
@@ -63,7 +54,7 @@
 </template>
 
 <script>
-    import {login, captcha, register, getEmail} from '@/api/login'
+    import {login, captcha, register, getRegisterEmail} from '@/api/login'
     import {ElNotification} from 'element-plus'
     import {setUser} from "@/utils/token";
 
@@ -182,7 +173,7 @@
                     })
                     return false;
                 }
-                let res = await getEmail(this.loginForm);
+                let res = await getRegisterEmail(this.loginForm);
                 if (res.success) {
                     ElNotification({
                         message: '发送成功',

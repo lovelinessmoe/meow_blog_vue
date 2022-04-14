@@ -35,9 +35,9 @@ export const register = (loginUser) => {
         }
     })
 }
-export const getEmail = (loginUser) => {
+export const getRegisterEmail = (loginUser) => {
     return request({
-        url: '/auth/mail',
+        url: '/auth/registerMail',
         method: 'post',
         data: loginUser,
         params: {
