@@ -218,7 +218,6 @@
         position: relative;
 
         .site-main {
-            margin-top: -170px;
             /*padding: -300px 0 0 0;*/
         }
     }

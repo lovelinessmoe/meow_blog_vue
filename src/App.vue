@@ -2,16 +2,18 @@
     <LoadingPage/>
     <TopBar/>
     <BlogPage/>
+    <FooterView/>
 </template>
 
 <script>
     import LoadingPage from "@/components/components/LoadingPage";
     import TopBar from "@/components/components/TopBar";
     import BlogPage from "@/components/BlogPage";
+    import FooterView from "@/components/components/FooterView";
 
     export default {
         name: 'App',
-        components: {BlogPage, TopBar, LoadingPage},
+        components: {FooterView, BlogPage, TopBar, LoadingPage},
         data() {
             return {}
         },
