@@ -63,8 +63,6 @@
 <script>
     import 'vue-cropper/dist/index.css'
     import {VueCropper} from "vue-cropper";
-    import {uploadImg} from "@/utils/qiniu";
-    import {ElNotification} from "element-plus";
 
     export default {
         name: "CropperImage",
@@ -84,7 +82,7 @@
                 previews: {},
                 option: {
                     img: '',             //裁剪图片的地址
-                    outputSize: 1,       //裁剪生成图片的质量(可选0.1 - 1)
+                    outputSize: 0.7,       //裁剪生成图片的质量(可选0.1 - 1)
                     outputType: 'png',  //裁剪生成图片的格式（jpeg || png || webp）
                     info: true,          //图片大小信息
                     canScale: true,      //图片是否允许滚轮缩放
@@ -98,8 +96,8 @@
                     canMove: true,      //上传图片是否可以移动
                     canMoveBox: false,    //截图框能否拖动
                     original: false,     //上传图片按照原始比例渲染
-                    centerBox: false,    //截图框是否被限制在图片里面
-                    height: true,        //是否按照设备的dpr 输出等比例图片
+                    centerBox: true,    //截图框是否被限制在图片里面
+                    height: false,        //是否按照设备的dpr 输出等比例图片
                     infoTrue: true,     //true为展示真实输出图片宽高，false展示看到的截图框宽高
                     maxImgSize: 3000,    //限制图片最大宽度和高度
                     enlarge: 1,          //图片根据截图框输出比例倍数
@@ -160,28 +158,7 @@
                 if (type === 'blob') {
                     //获取截图的blob数据
                     this.$refs.cropper.getCropBlob(async (img) => {
-                        let that = this;
-                        let observer = {
-                            next() {
-                                // this.percentage = res.total.percent;
-                            },
-                            error(res) {
-                                ElNotification.error({
-                                    title: '网络错误' + res,
-                                    message: '服务器超时'
-                                })
-                            },
-                            complete(data) {
-                                // this.status = "success";
-                                ElNotification({
-                                    message: '上传成功',
-                                    type: 'success'
-                                })
-                                //上传成功后返回父组件
-                                that.$emit('upload-img-success', data);
-                            }
-                        }
-                        uploadImg(img, observer);
+                        this.$emit('upload-img', img);
                     })
                 }
             },

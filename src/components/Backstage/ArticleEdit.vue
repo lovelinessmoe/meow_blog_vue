@@ -33,6 +33,7 @@
             </template>
 
             <mavon-editor
+                    style="z-index: 0;"
                     :toolbars="markdownOption"
                     v-model="blogForm.articleContent"/>
 
@@ -49,7 +50,7 @@
         <cropper-image
                 :url="blogForm.imgUrl?blogForm.imgUrl:''"
                 :fixedNumber="[16,9]"
-                @upload-img-success="handleUploadSuccess">
+                @upload-img="handleUpload">
         </cropper-image>
     </el-dialog>
 
@@ -60,6 +61,8 @@
     import {saveOrUpdateArticle, getDetail} from "@/api/Backstage/article";
     import {ElNotification} from 'element-plus'
     import CropperImage from "@/components/components/cropperImg/CropperImage";
+    import useUpYun from '@/hooks/useUpYun'
+
 
     export default {
         name: "ArticleEdit",
@@ -133,21 +136,22 @@
                 if (this.articleId !== undefined) {
                     let res = await getDetail(this.articleId)
                     this.blogForm = res.data;
-                    // 将数据库传入的HTML内容转换成编辑器识别的delta对象
-                    // let delta = this.editor.clipboard.convert({html: this.blogForm.articleContent})
                 }
             },
             //封面设置
             uploadPicture() {
                 this.cropperModel = true;
             },
-            //图片上传成功后
-            handleUploadSuccess(data) {
-                this.blogForm.imgUrl = 'http://oss.javaee.xyz/' + data.key;
-                this.cropperModel = false;
+            //上传图片
+            async handleUpload(data) {
+                const {uploadArticleImg} = useUpYun();
+                let res = await uploadArticleImg(data, this.blogForm.articleId);
+                if (res.success) {
+                    this.blogForm.imgUrl = res.data;
+                    this.cropperModel = false;
+                }
             }
         },
-
     }
 </script>
 

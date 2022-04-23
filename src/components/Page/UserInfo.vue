@@ -53,7 +53,7 @@
         <cropper-image
                 :url="user.avatarUrl?user.avatarUrl:''"
                 :fixedNumber="[1,1]"
-                @upload-img-success="handleUploadSuccess">
+                @upload-img="handleUpload">
         </cropper-image>
     </el-dialog>
 
@@ -94,6 +94,7 @@
     import {logout} from "@/api/login";
     import {removeUser} from "@/utils/token";
     import router from '@/router'
+    import useUpYun from '@/hooks/useUpYun'
 
 
     const {getCaptcha, captchaVal} = authCheck()
@@ -111,11 +112,15 @@
     //图片上传
     let cropperModel = ref(false);
 
-    //图片上传成功后
-    function handleUploadSuccess(data) {
-        console.dir(data);
-        user.value.avatarUrl = 'http://oss.javaee.xyz/' + data.key;
-        cropperModel.value = false;
+    const {uploadAvatarImg} = useUpYun();
+
+    //图片上传
+    async function handleUpload(data) {
+        let res = await uploadAvatarImg(data);
+        if (res.success) {
+            user.value.avatarUrl = res.data;
+            cropperModel.value = false;
+        }
     }
 
     //邮箱
@@ -143,7 +148,6 @@
         }
     }
 
-
     //提交修改用户信息
     async function updateUserInfo() {
         let res = await updateUserInfoApi(user.value, mailCode.value);
@@ -158,7 +162,6 @@
             await router.push('/login')
         }
     }
-
 </script>
 
 <style scoped lang="less">
