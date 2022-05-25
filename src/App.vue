@@ -3,6 +3,15 @@
     <TopBar/>
     <BlogPage/>
     <FooterView/>
+    <meting-js
+            server="netease"
+            type="playlist"
+            id="7454455583"
+            volume="0.4"
+            fixed="true">
+    </meting-js>
+
+    <!--    https://music.163.com/playlist?id=7454455583&userid=265622372-->
 </template>
 
 <script>

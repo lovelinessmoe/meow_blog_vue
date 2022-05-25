@@ -29,25 +29,25 @@
                            plain
                            @click.stop="addRow()">新增
                 </el-button>
-                <el-button type="text" @click="delSelection">
+                <el-button type="danger" text @click="delSelection">
                     删除{{selectionList.length}}篇文章
                 </el-button>
             </template>
             <!--            操作插槽-->
             <template #menu="{row,index}">
-                <el-button type="text"
+                <el-button type="primary" text
                            icon="el-icon-edit"
                            size="default"
                            plain
                            @click.stop="editRow(row,index)">编辑
                 </el-button>
-                <el-button type="text"
+                <el-button type="primary" text
                            icon="el-icon-view"
                            size="default"
                            plain
                            @click.stop="viewRow(row,index)">查看
                 </el-button>
-                <el-button type="text"
+                <el-button type="primary" text
                            icon="chat-line-round"
                            size="default"
                            plain
@@ -63,7 +63,7 @@
 
         <ArticleEdit v-bind:articleId="form.articleId"
                      v-bind:articleTitleDisable="articleTitleDisable" v-if="editVisible"
-                     @close="editVisible=false"/>
+                     @close="editVisible=false;this.onLoad(this.page);"/>
 
         <!-- 评论管理弹窗 -->
         <el-dialog

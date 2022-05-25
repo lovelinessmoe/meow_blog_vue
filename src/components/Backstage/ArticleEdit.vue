@@ -1,6 +1,6 @@
 <template>
     <el-form label-position="left" label-width="80px"
-             size="default" @submit.prevent style="height: 100%">
+             size="default" @submit.prevent style="height: 700px;">
         <el-card class="box-card" style="height: 100%" shadow="always" body-style="height: 100%">
             <template #header>
                 <div class="card-header">
@@ -33,9 +33,11 @@
             </template>
 
             <mavon-editor
-                    style="z-index: 0;"
+                    id="mavon_editor"
                     :toolbars="markdownOption"
-                    v-model="blogForm.articleContent"/>
+                    v-model="blogForm.articleContent"
+                    @save="submitForm()"/>
+            <!--                    ctrl + s 的回调事件(保存按键,同样触发该回调)-->
 
             <el-button type="primary" @click="submitForm()">保存</el-button>
             <el-button type="danger" @click="this.$emit('close');">取消</el-button>
@@ -155,6 +157,12 @@
     }
 </script>
 
-<style scoped>
+<style scoped lang="less">
+    #mavon_editor {
+        z-index: 0;
+        height: 500px;
+
+    }
+
 
 </style>

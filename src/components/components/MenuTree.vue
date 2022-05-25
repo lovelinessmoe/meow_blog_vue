@@ -42,4 +42,8 @@
     .child {
         padding-left: 15px;
     }
+
+    ol, ul {
+        list-style: none;
+    }
 </style>

@@ -22,7 +22,7 @@
                     <!--                    <div class="entry-content" v-html="blog.articleContent"></div>-->
                     <div class="entry-content">
                         <mavon-editor
-                                style="z-index: 0;"
+                                id="mavon_editor"
                                 v-model="blog.articleContent"
                                 :ishljs="true" :boxShadow="false"
                                 :subfield="false" defaultOpen="preview"
@@ -266,7 +266,9 @@
         }
 
         .entry-content {
-
+            #mavon_editor {
+                z-index: 0;
+            }
         }
 
         footer.post-footer {

@@ -14,7 +14,7 @@
 
             <!--            上栏插槽-->
             <template #menu-left="">
-                <el-button type="text" @click="delSelection">
+                <el-button type="danger" text @click="delSelection">
                     删除{{selectionList.length}}篇文章
                 </el-button>
             </template>

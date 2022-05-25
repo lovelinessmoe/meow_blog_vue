@@ -20,7 +20,7 @@
                 @on-load="onLoad">
 
             <template #menu-left="">
-                <el-button type="text" @click="delSelection">
+                <el-button type="danger" text @click="delSelection">
                     删除{{selectionList.length}}个用户
                 </el-button>
             </template>
