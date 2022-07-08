@@ -6,47 +6,47 @@
                 background-repeat: no-repeat;background-size: cover">
         <!--登录区域-->
         <div class="login_box">
-            <el-form :model="loginForm" :rules="loginRules" ref="loginForm" class="login_form">
+            <el-form :model="loginForm" :rules="loginRules" class="login_form" ref="loginForm">
                 <el-form-item prop="email">
-                    <el-input v-model="loginForm.email" placeholder="请输入邮箱"
-                              prefix-icon="Message"></el-input>
+                    <el-input placeholder="请输入邮箱" prefix-icon="Message"
+                              v-model="loginForm.email"></el-input>
                 </el-form-item>
                 <el-form-item prop="password">
-                    <el-input v-model="loginForm.password" placeholder="请输入登录密码"
-                              prefix-icon="Lock" type="password"></el-input>
+                    <el-input placeholder="请输入登录密码" prefix-icon="Lock"
+                              type="password" v-model="loginForm.password"></el-input>
                 </el-form-item>
                 <el-form-item prop="password" v-if="type === 'register'">
-                    <el-input v-model="loginForm.RePassword" placeholder="请重复输入一次登录密码"
-                              prefix-icon="Lock" type="password"></el-input>
+                    <el-input placeholder="请重复输入一次登录密码" prefix-icon="Lock"
+                              type="password" v-model="loginForm.RePassword"></el-input>
                 </el-form-item>
                 <el-form-item prop="username" v-if="type === 'register'">
-                    <el-input v-model="loginForm.userName" placeholder="请输入用户昵称"
-                              prefix-icon="User"></el-input>
+                    <el-input placeholder="请输入用户昵称" prefix-icon="User"
+                              v-model="loginForm.userName"></el-input>
                 </el-form-item>
                 <el-form-item prop="verifyCode">
                     <div class="verifyCode_box">
-                        <el-input v-model="loginForm.verifyCode" placeholder="请输入验证码"
+                        <el-input class="verifyCode" placeholder="请输入验证码"
                                   prefix-icon="Grid"
-                                  class="verifyCode" ref="verifyCode"></el-input>
-                        <img v-bind:src="captchaImg" class="verifyCode_img" @click="captcha" alt="你瞅啥">
+                                  ref="verifyCode" v-model="loginForm.verifyCode"></el-input>
+                        <img @click="captcha" alt="你瞅啥" class="verifyCode_img" v-bind:src="captchaImg">
                     </div>
                 </el-form-item>
                 <el-form-item prop="mailCode" v-if="type === 'register'">
                     <div class="email_box">
-                        <el-input v-model="loginForm.mailCode" placeholder="请输入邮箱验证码"
+                        <el-input class="mailCode" placeholder="请输入邮箱验证码"
                                   prefix-icon="Watermelon"
-                                  class="mailCode" ref="mailCode"></el-input>
-                        <el-button type="primary" class="email_button" @click="getEmailCode()"
-                                   :disabled="!loginForm.verifyCode">获取邮箱验证码
+                                  ref="mailCode" v-model="loginForm.mailCode"></el-input>
+                        <el-button :disabled="!loginForm.verifyCode" @click="getEmailCode()" class="email_button"
+                                   type="primary">获取邮箱验证码
                         </el-button>
                     </div>
                 </el-form-item>
                 <el-form-item class="login_btn">
-                    <el-button v-if="type === 'register'" type="primary" @click="submitForm('loginForm')">注册</el-button>
-                    <el-button v-else type="primary" @click="submitForm('loginForm')">登陆</el-button>
+                    <el-button @click="submitForm('loginForm')" type="primary" v-if="type === 'register'">注册</el-button>
+                    <el-button @click="submitForm('loginForm')" type="primary" v-else>登陆</el-button>
                     <el-button @click="resetForm('loginForm')">重置</el-button>
-                    <el-button v-if="type === 'register'" @click="type = 'login'">返回登陆</el-button>
-                    <el-button v-else @click="type = 'register'">去注册</el-button>
+                    <el-button @click="type = 'login'" v-if="type === 'register'">返回登陆</el-button>
+                    <el-button @click="type = 'register'" v-else>去注册</el-button>
                 </el-form-item>
             </el-form>
         </div>

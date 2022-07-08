@@ -22,12 +22,12 @@
                     <!--                    <div class="entry-content" v-html="blog.articleContent"></div>-->
                     <div class="entry-content">
                         <mavon-editor
-                                id="mavon_editor"
+                                :boxShadow="false"
+                                :editable="false"
+                                :ishljs="true" :scrollStyle="true"
+                                :subfield="false" :toolbarsFlag="false"
+                                defaultOpen="preview" id="mavon_editor"
                                 v-model="blog.articleContent"
-                                :ishljs="true" :boxShadow="false"
-                                :subfield="false" defaultOpen="preview"
-                                :editable="false" :toolbarsFlag="false"
-                                :scrollStyle="true"
                         />
                     </div>
                     <!-- 文章底部 -->
@@ -60,9 +60,9 @@
                             <!--                            <i class="iconfont show-share"></i>-->
                             <!--                        </div>-->
                             <!-- 赞助按钮 -->
-                            <div class="donate" @click="showDonate=!showDonate">
+                            <div @click="showDonate=!showDonate" class="donate">
                                 <span>赏</span>
-                                <ul class="donate_inner" :class="{'show':showDonate}">
+                                <ul :class="{'show':showDonate}" class="donate_inner">
                                     <li class="wedonate">
                                         <img src="http://q1.qlogo.cn/g?b=qq&nk=1695560542&s=640">
                                         <p>微信</p></li>
@@ -86,20 +86,21 @@
                     </div>
                     <!--评论-->
                     <div class="comments" style="text-align: center">
-                        <el-button v-if="!commentEdit" type="success" @click="commentEdit=true">
+                        <el-button @click="commentEdit=true" type="success" v-if="!commentEdit">
                             留个言吧
                         </el-button>
                         <div v-else>
                             <mavon-editor style="z-index: 0;" v-model="this.replyComment.content"/>
-                            <el-button type="success" icon="Check" circle @click="submitReply"
-                                       style="float: right; position: relative;top: -32px;z-index: 1;"/>
+                            <el-button @click="submitReply" circle icon="Check"
+                                       style="float: right; position: relative;top: -32px;z-index: 1;"
+                                       type="success"/>
                         </div>
 
-                        <comment v-for="item in comments" :key="item.commentId" :comment="item"
-                                 @refreshComment="this.getComment">
+                        <comment :comment="item" :key="item.commentId" @refreshComment="this.getComment"
+                                 v-for="item in comments">
                             <template v-if="item.children?item.children.length:false">
-                                <comment v-for="reply in item.children" :key="reply.commentId"
-                                         :comment="reply"/>
+                                <comment :comment="reply" :key="reply.commentId"
+                                         v-for="reply in item.children"/>
                             </template>
                         </comment>
                     </div>
@@ -213,7 +214,7 @@
         },
     }
 </script>
-<style scoped lang="less">
+<style lang="less" scoped>
     .site-content {
         position: relative;
 

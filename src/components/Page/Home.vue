@@ -21,22 +21,22 @@
                     </div>
                 </section-title>
                 <div class="feature-content">
-                    <div class="feature-item" v-for="item in features" :key="item.title">
+                    <div :key="item.title" class="feature-item" v-for="item in features">
                         <Feature :data="item"></Feature>
                     </div>
                 </div>
             </div>
             <!--文章列表-->
-            <main class="site-main" :class="{'search':hideSlogan}">
+            <main :class="{'search':hideSlogan}" class="site-main">
                 <section-title v-if="!hideSlogan">推荐</section-title>
-                <template v-for="item in postList" :key="item.articleId">
+                <template :key="item.articleId" v-for="item in postList">
                     <BlogCard :blog="item"></BlogCard>
                 </template>
             </main>
 
             <!--加载更多-->
             <div class="more" v-show="hasNextPage">
-                <div class="more-btn" @click="loadMore">More</div>
+                <div @click="loadMore" class="more-btn">More</div>
             </div>
         </div>
     </div>
@@ -110,7 +110,7 @@
     }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 
     .quote {
         border-left: 3px solid #ff6d6d;

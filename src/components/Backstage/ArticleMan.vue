@@ -3,74 +3,74 @@
     <div class="animate" style="margin-top: 80px;padding: 20px;">
 
         <avue-crud
+                :before-open="beforeOpen"
+                :data="data"
                 :option="option"
                 :table-loading="loading"
-                :data="data"
-                v-model:page="page"
-                v-model="form"
-                ref="crud"
-                :before-open="beforeOpen"
-                @row-update="rowUpdate"
-                @row-save="rowSave"
+                @current-change="currentChange"
+                @on-load="onLoad"
+                @refresh-change="refreshChange"
                 @row-del="rowDel"
+                @row-save="rowSave"
+                @row-update="rowUpdate"
                 @search-change="searchChange"
                 @search-reset="searchReset"
                 @selection-change="selectionChange"
-                @current-change="currentChange"
                 @size-change="sizeChange"
-                @refresh-change="refreshChange"
-                @on-load="onLoad">
+                ref="crud"
+                v-model="form"
+                v-model:page="page">
 
             <!--            上栏插槽-->
             <template #menu-left="">
-                <el-button type="danger"
+                <el-button @click.stop="addRow()"
                            icon="el-icon-plus"
-                           size="small"
                            plain
-                           @click.stop="addRow()">新增
+                           size="small"
+                           type="danger">新增
                 </el-button>
-                <el-button type="danger" text @click="delSelection">
+                <el-button @click="delSelection" text type="danger">
                     删除{{selectionList.length}}篇文章
                 </el-button>
             </template>
             <!--            操作插槽-->
             <template #menu="{row,index}">
-                <el-button type="primary" text
-                           icon="el-icon-edit"
-                           size="default"
+                <el-button @click.stop="editRow(row,index)" icon="el-icon-edit"
                            plain
-                           @click.stop="editRow(row,index)">编辑
+                           size="default"
+                           text
+                           type="primary">编辑
                 </el-button>
-                <el-button type="primary" text
-                           icon="el-icon-view"
-                           size="default"
+                <el-button @click.stop="viewRow(row,index)" icon="el-icon-view"
                            plain
-                           @click.stop="viewRow(row,index)">查看
+                           size="default"
+                           text
+                           type="primary">查看
                 </el-button>
-                <el-button type="primary" text
-                           icon="chat-line-round"
-                           size="default"
+                <el-button @click.stop="viewComment(row,index)" icon="chat-line-round"
                            plain
-                           @click.stop="viewComment(row,index)">查看评论
+                           size="default"
+                           text
+                           type="primary">查看评论
                 </el-button>
             </template>
             <!--            自定义列-->
             <template #isTop="{row}">
-                <el-switch v-model="row.isTop" @change="switchTopStat(row.articleId)"/>
+                <el-switch @change="switchTopStat(row.articleId)" v-model="row.isTop"/>
             </template>
         </avue-crud>
 
 
-        <ArticleEdit v-bind:articleId="form.articleId"
-                     v-bind:articleTitleDisable="articleTitleDisable" v-if="editVisible"
-                     @close="editVisible=false;this.onLoad(this.page);"/>
+        <ArticleEdit @close="editVisible=false;this.onLoad(this.page);"
+                     v-bind:articleId="form.articleId" v-bind:articleTitleDisable="articleTitleDisable"
+                     v-if="editVisible"/>
 
         <!-- 评论管理弹窗 -->
         <el-dialog
+                fullscreen="fullscreen"
                 title="查看评论"
-                v-model="commentModel"
                 v-if="commentModel"
-                fullscreen="fullscreen">
+                v-model="commentModel">
 
             <CommentMan :articleId="articleId"></CommentMan>
         </el-dialog>

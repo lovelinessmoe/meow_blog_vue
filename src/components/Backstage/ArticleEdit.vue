@@ -1,18 +1,18 @@
 <template>
-    <el-form label-position="left" label-width="80px"
-             size="default" @submit.prevent style="height: 700px;">
-        <el-card class="box-card" style="height: 100%" shadow="always" body-style="height: 100%">
+    <el-form @submit.prevent label-position="left"
+             label-width="80px" size="default" style="height: 700px;">
+        <el-card body-style="height: 100%" class="box-card" shadow="always" style="height: 100%">
             <template #header>
                 <div class="card-header">
                     <el-row>
                         <el-col :span="20" class="grid-cell">
-                            <el-form-item label="以后想用来访问的地址" prop="" label-width="auto">
-                                <el-input :disabled="articleTitleDisable" v-model="blogForm.articleId" type="text"
-                                          clearable></el-input>
+                            <el-form-item label="以后想用来访问的地址" label-width="auto" prop="">
+                                <el-input :disabled="articleTitleDisable" clearable type="text"
+                                          v-model="blogForm.articleId"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="4" class="grid-cell">
-                            <el-button type="primary" @click="uploadPicture('flagImg')" style="width: 100%;">
+                            <el-button @click="uploadPicture('flagImg')" style="width: 100%;" type="primary">
                                 <span>封面</span>
                             </el-button>
                         </el-col>
@@ -20,12 +20,12 @@
                     <el-row>
                         <el-col :md="12" :sm="12" :xs="24" class="grid-cell">
                             <el-form-item label="标题" prop="">
-                                <el-input v-model="blogForm.articleTitle" type="text" clearable></el-input>
+                                <el-input clearable type="text" v-model="blogForm.articleTitle"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :md="12" :sm="12" :xs="24" class="grid-cell">
                             <el-form-item label="简介" prop="">
-                                <el-input v-model="blogForm.articleShort" type="text" clearable></el-input>
+                                <el-input clearable type="text" v-model="blogForm.articleShort"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -33,25 +33,25 @@
             </template>
 
             <mavon-editor
-                    id="mavon_editor"
                     :toolbars="markdownOption"
-                    v-model="blogForm.articleContent"
-                    @save="submitForm()"/>
+                    @save="submitForm()"
+                    id="mavon_editor"
+                    v-model="blogForm.articleContent"/>
             <!--                    ctrl + s 的回调事件(保存按键,同样触发该回调)-->
 
-            <el-button type="primary" @click="submitForm()">保存</el-button>
-            <el-button type="danger" @click="this.$emit('close');">取消</el-button>
+            <el-button @click="submitForm()" type="primary">保存</el-button>
+            <el-button @click="this.$emit('close');" type="danger">取消</el-button>
         </el-card>
     </el-form>
 
     <!-- 剪裁组件弹窗 -->
     <el-dialog
+            fullscreen="fullscreen"
             title="裁切封面"
-            v-model="cropperModel"
-            fullscreen="fullscreen">
+            v-model="cropperModel">
         <cropper-image
-                :url="blogForm.imgUrl?blogForm.imgUrl:''"
                 :fixedNumber="[16,9]"
+                :url="blogForm.imgUrl?blogForm.imgUrl:''"
                 @upload-img="handleUpload">
         </cropper-image>
     </el-dialog>
@@ -157,7 +157,7 @@
     }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
     #mavon_editor {
         z-index: 0;
         height: 500px;

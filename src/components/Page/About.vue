@@ -5,13 +5,13 @@
                 <div class="about-site about-info">
                     <section-title><span>❤</span>关于博客</section-title>
                     <div class="info-card">
-                        <p>博客前端基于<a target="_blank" class="out-link" href="https://gitee.com/fengziy/Gblog">gblog</a>更改
+                        <p>博客前端基于<a class="out-link" href="https://gitee.com/fengziy/Gblog" target="_blank">gblog</a>更改
                         </p>
                         <p>VUE版本由2->3</p>
-                        <p><a target="_blank" href="https://github.com/lovelinessmoe/MeowBlogNew"
-                              style="color: #ff6d6d;">后端仓库</a> | <a target="_blank"
-                                                                    href="https://github.com/lovelinessmoe/meow_blog_vue"
-                                                                    style="color: #ff6d6d;">前端仓库</a></p>
+                        <p><a href="https://github.com/lovelinessmoe/MeowBlogNew" style="color: #ff6d6d;"
+                              target="_blank">后端仓库</a> | <a href="https://github.com/lovelinessmoe/meow_blog_vue"
+                                                            style="color: #ff6d6d;"
+                                                            target="_blank">前端仓库</a></p>
                         <p>记得star★哟</p>
                     </div>
                 </div>
@@ -21,7 +21,7 @@
                         <div class="contactForm">
                             <div class="form-item">
                                 <label for="mail">邮箱</label>
-                                <input class="v" type="email" name="mail" id="mail">
+                                <input class="v" id="mail" name="mail" type="email">
                             </div>
                             <div class="form-item">
                                 <label for="content">内容</label>
@@ -59,7 +59,7 @@
         }
     }
 </script>
-<style scoped lang="less">
+<style lang="less" scoped>
     .about {
         padding-top: 40px;
     }

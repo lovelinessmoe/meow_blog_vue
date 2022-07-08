@@ -15,7 +15,7 @@
     }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
     /*****/
     .loader {
         position: relative;

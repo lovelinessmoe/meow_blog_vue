@@ -4,11 +4,11 @@
     <BlogPage/>
     <FooterView/>
     <meting-js
+            fixed="true"
+            id="7454455583"
             server="netease"
             type="playlist"
-            id="7454455583"
-            volume="0.4"
-            fixed="true">
+            volume="0.4">
     </meting-js>
 
     <!--    https://music.163.com/playlist?id=7454455583&userid=265622372-->

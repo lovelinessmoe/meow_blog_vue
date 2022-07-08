@@ -2,19 +2,19 @@
     <div class="animate">
 
         <avue-crud
+                :data="data"
                 :option="option"
                 :table-loading="loading"
-                :data="data"
-                v-model="form"
-                ref="crud"
+                @on-load="onLoad"
+                @refresh-change="refreshChange"
                 @row-del="rowDel"
                 @selection-change="selectionChange"
-                @refresh-change="refreshChange"
-                @on-load="onLoad">
+                ref="crud"
+                v-model="form">
 
             <!--            上栏插槽-->
             <template #menu-left="">
-                <el-button type="danger" text @click="delSelection">
+                <el-button @click="delSelection" text type="danger">
                     删除{{selectionList.length}}篇文章
                 </el-button>
             </template>
@@ -22,11 +22,11 @@
             <!--            自定义列-->
             <template #content="{row}">
                 <mavon-editor
-                        style="z-index: 0;"
-                        v-model="row.content"
-                        :ishljs="true" :boxShadow="false"
-                        :subfield="false" defaultOpen="preview"
-                        :editable="false" :toolbarsFlag="false"
+                        :boxShadow="false"
+                        :editable="false"
+                        :ishljs="true" :subfield="false"
+                        :toolbarsFlag="false" defaultOpen="preview"
+                        style="z-index: 0;" v-model="row.content"
                 />
                 <!--                        :scrollStyle="true"-->
             </template>

@@ -1,9 +1,9 @@
 <!--回到顶端-->
 <template>
     <transition name="slide-fade">
-        <div class="back-top" v-show="show" @click.stop="getTop">
-            <img class="img1" src="@/assets/img/_tortoise.svg" alt="">
-            <img class="img2" src="@/assets/img/tortoise.svg" alt="">
+        <div @click.stop="getTop" class="back-top" v-show="show">
+            <img alt="" class="img1" src="@/assets/img/_tortoise.svg">
+            <img alt="" class="img2" src="@/assets/img/tortoise.svg">
             <p>Top</p>
         </div>
     </transition>
@@ -46,7 +46,7 @@
     }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
     .back-top {
         background-color: #FFFFFF;
         position: fixed;

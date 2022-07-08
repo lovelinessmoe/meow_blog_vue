@@ -1,8 +1,8 @@
 <!--头展示-->
 <template>
-    <div id="banner" :class="{'home-banner':isHome}">
-        <div class="banner-img"
-             :style="{'background-image': `url(${src?src:'https://s2.loli.net/2022/04/05/L7DH4coMPSAKe1a.jpg'})`}">
+    <div :class="{'home-banner':isHome}" id="banner">
+        <div :style="{'background-image': `url(${src?src:'https://s2.loli.net/2022/04/05/L7DH4coMPSAKe1a.jpg'})`}"
+             class="banner-img">
             <template v-if="isHome">
                 <!--博主信息-->
                 <div class="focusinfo">
@@ -18,9 +18,9 @@
                     </div>
                     <!-- 社交信息 -->
                     <div class="top-social">
-                        <div v-for="item in socials" :key="item.id" :title="item.title">
-                            <a :href="item.href" target="_blank" :style="{'color':item.color}">
-                                <i class="iconfont" :class="item.icon"></i>
+                        <div :key="item.id" :title="item.title" v-for="item in socials">
+                            <a :href="item.href" :style="{'color':item.color}" target="_blank">
+                                <i :class="item.icon" class="iconfont"></i>
                             </a>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
     }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 
     #banner {
         position: relative;

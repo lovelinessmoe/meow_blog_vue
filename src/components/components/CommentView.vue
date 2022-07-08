@@ -1,6 +1,6 @@
 <!--评论区的每个-->
 <template>
-    <div class="comment" :id="`comment${comment.commentId}`">
+    <div :id="`comment${comment.commentId}`" class="comment">
         <div class="comment-head">
             <div class="user-avatar"><img
                     :src="comment.avatarUrl?comment.avatarUrl:'https://s2.loli.net/2022/04/05/3QmL6UklnaV9EP5.jpg'"
@@ -17,8 +17,8 @@
                         </div>
                         <div style="font-size: 13px;">
                             <span style="color: #9c9c9c;margin-right: 20px;">{{this.$moment(comment.createTime).format('YYYY-MM-DD')}}</span>
-                            <span v-if="comment.pId === '0'" @click.stop="showCommentEditor=true"
-                                  style="cursor: pointer;">回复</span>
+                            <span @click.stop="showCommentEditor=true" style="cursor: pointer;"
+                                  v-if="comment.pId === '0'">回复</span>
                         </div>
                     </div>
                 </section-title>
@@ -28,17 +28,18 @@
             <div class="content-text">
                 <!--                <p>{{comment.content}}</p>-->
                 <mavon-editor
-                        style="z-index: 0;"
-                        v-model="content"
-                        :ishljs="true" :boxShadow="false"
-                        :subfield="false" defaultOpen="preview"
-                        :editable="false" :toolbarsFlag="false"
+                        :boxShadow="false"
+                        :editable="false"
+                        :ishljs="true" :subfield="false"
+                        :toolbarsFlag="false" defaultOpen="preview"
+                        style="z-index: 0;" v-model="content"
                 />
             </div>
-            <div v-if="showCommentEditor" @click.stop="">
+            <div @click.stop="" v-if="showCommentEditor">
                 <mavon-editor v-model="this.replyComment.content"/>
-                <el-button type="success" icon="Check" circle @click="submitReply"
-                           style="float: right; position: relative;top: -32px;z-index: 999999;"/>
+                <el-button @click="submitReply" circle icon="Check"
+                           style="float: right; position: relative;top: -32px;z-index: 999999;"
+                           type="success"/>
                 <!--                <comment-message-editor :inline="true" buttonText="回复" @submit="submitReply"></comment-message-editor>-->
             </div>
             <slot></slot>
@@ -110,7 +111,7 @@
     }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
     .comment {
         margin: 20px 0;
     }

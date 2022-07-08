@@ -1,10 +1,10 @@
 <!--文章的列表-->
 <template>
     <ul class="menus">
-        <li v-for="item in menus" :key="item.id">
-            <span style="cursor: pointer;" @click="goAnchor('#'+item.id)">#{{item.title}}</span>
-            <ul v-if="item[childLabel]" class="child">
-                <menu-tree :menus="item[childLabel]" :child-label="childLabel"></menu-tree>
+        <li :key="item.id" v-for="item in menus">
+            <span @click="goAnchor('#'+item.id)" style="cursor: pointer;">#{{item.title}}</span>
+            <ul class="child" v-if="item[childLabel]">
+                <menu-tree :child-label="childLabel" :menus="item[childLabel]"></menu-tree>
             </ul>
         </li>
     </ul>
@@ -34,7 +34,7 @@
     }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
     .menus {
         line-height: 1.7em;
     }

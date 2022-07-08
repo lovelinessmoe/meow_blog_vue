@@ -1,9 +1,9 @@
 <!--搜索-->
 <template>
     <div class="header-search">
-        <i class="iconfont iconsearch" @click.stop="click"></i>
-        <input ref="searchInput" :class="{'show':show}" v-model="searchValue" type="text" @click.stop=""
-               @keyup.enter="search"/>
+        <i @click.stop="click" class="iconfont iconsearch"></i>
+        <input :class="{'show':show}" @click.stop="" @keyup.enter="search" ref="searchInput" type="text"
+               v-model="searchValue"/>
     </div>
 </template>
 
@@ -46,7 +46,7 @@
     }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
     .header-search {
         display: inline-block;
         position: relative;

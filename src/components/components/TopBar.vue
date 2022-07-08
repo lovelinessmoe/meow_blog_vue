@@ -1,16 +1,16 @@
 <template>
-    <div id="layout-header" :class="{'fixed':fixed,'hidden':hidden}"
-         @click.stop="mobileShow=false">
+    <div :class="{'fixed':fixed,'hidden':hidden}" @click.stop="mobileShow=false"
+         id="layout-header">
         <div class="site-logo">
             <router-link to="/blog/home">
-                <img src="@/assets/img/logo.svg" alt="">
+                <img alt="" src="@/assets/img/logo.svg">
                 <!--                <p class="site-name">MeowBlog</p>-->
             </router-link>
         </div>
-        <div class="menus-btn" @click.stop="mobileShow=!mobileShow">
+        <div @click.stop="mobileShow=!mobileShow" class="menus-btn">
             Menus
         </div>
-        <div class="site-menus" :class="{'mobileShow':mobileShow}" @click.stop="mobileShow=!mobileShow">
+        <div :class="{'mobileShow':mobileShow}" @click.stop="mobileShow=!mobileShow" class="site-menus">
             <div class="menu-item header-search">
                 <header-search/>
             </div>
@@ -20,7 +20,7 @@
             <div class="menu-item hasChild">
                 <a href="/blog/tags">标签</a>
                 <div class="childMenu" v-if="category.length">
-                    <div class="sub-menu" v-for="item in category" :key="item.title">
+                    <div :key="item.title" class="sub-menu" v-for="item in category">
                         <router-link :to="`/blog/tags/${item.title}`">{{item.title}}</router-link>
                     </div>
                 </div>
@@ -117,7 +117,7 @@
     }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
     #layout-header {
         position: fixed;
         top: 0;

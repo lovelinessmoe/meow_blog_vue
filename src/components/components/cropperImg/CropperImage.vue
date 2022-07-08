@@ -6,28 +6,28 @@
                 <!--                        :autoCropWidth="option.autoCropWidth"-->
                 <!--                        :autoCropHeight="option.autoCropHeight"-->
                 <vue-cropper
-                        ref="cropper"
-                        :img="option.img"
-                        :outputSize="option.outputSize"
-                        :outputType="option.outputType"
-                        :info="option.info"
-                        :canScale="option.canScale"
                         :autoCrop="option.autoCrop"
-                        :fixed="option.fixed"
-                        :fixedNumber="fixedNumber"
-                        :full="option.full"
-                        :fixedBox="option.fixedBox"
                         :canMove="option.canMove"
                         :canMoveBox="option.canMoveBox"
-                        :original="option.original"
+                        :canScale="option.canScale"
                         :centerBox="option.centerBox"
+                        :enlarge="option.enlarge"
+                        :fixed="option.fixed"
+                        :fixedBox="option.fixedBox"
+                        :fixedNumber="fixedNumber"
+                        :full="option.full"
                         :height="option.height"
+                        :img="option.img"
+                        :info="option.info"
                         :infoTrue="option.infoTrue"
                         :maxImgSize="option.maxImgSize"
-                        :enlarge="option.enlarge"
                         :mode="option.mode"
+                        :original="option.original"
+                        :outputSize="option.outputSize"
+                        :outputType="option.outputType"
+                        @imgLoad="imgLoad"
                         @realTime="realTime"
-                        @imgLoad="imgLoad">
+                        ref="cropper">
                 </vue-cropper>
             </div>
             <!--进度条-->
@@ -36,17 +36,17 @@
             <div class="footer-btn">
                 <div class="scope-btn">
                     <label class="btn" for="uploads">选择封面</label>
-                    <input type="file" id="uploads" style="position:absolute; clip:rect(0 0 0 0);"
-                           accept="image/png, image/jpeg, image/gif, image/jpg" @change="selectImg($event)">
-                    <el-button size="mini" type="danger" plain icon="el-icon-zoom-in" @click="changeScale(1)">放大
+                    <input @change="selectImg($event)" accept="image/png, image/jpeg, image/gif, image/jpg" id="uploads"
+                           style="position:absolute; clip:rect(0 0 0 0);" type="file">
+                    <el-button @click="changeScale(1)" icon="el-icon-zoom-in" plain size="mini" type="danger">放大
                     </el-button>
-                    <el-button size="mini" type="danger" plain icon="el-icon-zoom-out" @click="changeScale(-1)">缩小
+                    <el-button @click="changeScale(-1)" icon="el-icon-zoom-out" plain size="mini" type="danger">缩小
                     </el-button>
-                    <el-button size="mini" type="danger" plain @click="rotateLeft">↺ 左旋转</el-button>
-                    <el-button size="mini" type="danger" plain @click="rotateRight">↻ 右旋转</el-button>
+                    <el-button @click="rotateLeft" plain size="mini" type="danger">↺ 左旋转</el-button>
+                    <el-button @click="rotateRight" plain size="mini" type="danger">↻ 右旋转</el-button>
                 </div>
                 <div class="upload-btn">
-                    <el-button size="mini" type="success" @click="uploadImg('blob')">上传封面 <i class="el-icon-upload"></i>
+                    <el-button @click="uploadImg('blob')" size="mini" type="success">上传封面 <i class="el-icon-upload"></i>
                     </el-button>
                 </div>
             </div>
@@ -166,7 +166,7 @@
     }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
     .cropper-content {
         display: flex;
         display: -webkit-flex;

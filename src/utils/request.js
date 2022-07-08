@@ -5,8 +5,8 @@ import store from '@/store'
 import router from '@/router'
 
 const instance = axios.create({
-    baseURL: process.env.VUE_APP_URL ? process.env.VUE_APP_URL : 'https://javaee.xyz',
-    // baseURL: 'https://javaee.xyz',
+    baseURL: process.env.VUE_APP_URL ? process.env.VUE_APP_URL : 'https://blogapi.ashes.vip',
+    // baseURL: 'https://blogapi.ashes.vip',
     // baseURL: 'http://127.0.0.1:8088',
     timeout: 10000
 })

@@ -2,25 +2,25 @@
 <template>
     <div class="animate" style="margin-top: 80px;padding: 20px;">
         <avue-crud
+                :data="data"
                 :option="option"
                 :table-loading="loading"
-                :data="data"
-                v-model:page="page"
-                v-model="form"
-                ref="crud"
-                @row-update="rowUpdate"
-                @row-save="rowSave"
+                @current-change="currentChange"
+                @on-load="onLoad"
+                @refresh-change="refreshChange"
                 @row-del="rowDel"
+                @row-save="rowSave"
+                @row-update="rowUpdate"
                 @search-change="searchChange"
                 @search-reset="searchReset"
                 @selection-change="selectionChange"
-                @current-change="currentChange"
                 @size-change="sizeChange"
-                @refresh-change="refreshChange"
-                @on-load="onLoad">
+                ref="crud"
+                v-model="form"
+                v-model:page="page">
 
             <template #menu-left="">
-                <el-button type="danger" text @click="delSelection">
+                <el-button @click="delSelection" text type="danger">
                     删除{{selectionList.length}}个用户
                 </el-button>
             </template>

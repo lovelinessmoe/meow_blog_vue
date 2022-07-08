@@ -2,39 +2,39 @@
     <div class="user-info">
         <div class="site-content">
             <div class="content-warp">
-                <el-form label-position="left" label-width="80px"
-                         size="default" @submit.prevent style="height: 100%">
+                <el-form @submit.prevent label-position="left"
+                         label-width="80px" size="default" style="height: 100%">
                     <el-card class="box-card">
                         <template #header>
                             <div class="card-header">
                                 <div style="">
                                     <span>个人资料修改</span>
-                                    <el-button type="success" icon="Check" circle @click="userCheckModel = true;"
-                                               style="float:right;"/>
+                                    <el-button @click="userCheckModel = true;" circle icon="Check" style="float:right;"
+                                               type="success"/>
                                     <div style="clear:both;"></div>
                                 </div>
                             </div>
                         </template>
                         <div>
                             <el-row>
-                                <el-col :xs="24" :sm="10" :md="8" class="grid-cell">
-                                    <el-avatar shape="square" :size="200" :src="user.avatarUrl"
-                                               @click="cropperModel=true"
-                                               fit="fill"/>
+                                <el-col :md="8" :sm="10" :xs="24" class="grid-cell">
+                                    <el-avatar :size="200" :src="user.avatarUrl" @click="cropperModel=true"
+                                               fit="fill"
+                                               shape="square"/>
                                 </el-col>
-                                <el-col :xs="24" :sm="14" :md="16" class="grid-cell">
+                                <el-col :md="16" :sm="14" :xs="24" class="grid-cell">
                                     <el-form-item label="昵称" prop="">
-                                        <el-input v-model="user.userName" type="text" clearable></el-input>
+                                        <el-input clearable type="text" v-model="user.userName"></el-input>
                                     </el-form-item>
                                     <el-form-item label="年龄" prop="">
-                                        <el-input v-model="user.age" type="number" clearable></el-input>
+                                        <el-input clearable type="number" v-model="user.age"></el-input>
                                     </el-form-item>
                                     <el-form-item label="手机号" prop="">
-                                        <el-input v-model="user.telephone" type="text" clearable></el-input>
+                                        <el-input clearable type="text" v-model="user.telephone"></el-input>
                                     </el-form-item>
                                     <el-form-item label="密码" prop="">
-                                        <el-input type="password" v-model="user.password" placeholder="留空表示不修改"
-                                                  clearable></el-input>
+                                        <el-input clearable placeholder="留空表示不修改" type="password"
+                                                  v-model="user.password"></el-input>
                                     </el-form-item>
                                 </el-col>
                             </el-row>
@@ -47,12 +47,12 @@
 
     <!-- 剪裁组件弹窗 -->
     <el-dialog
+            fullscreen="fullscreen"
             title="裁切封面"
-            v-model="cropperModel"
-            fullscreen="fullscreen">
+            v-model="cropperModel">
         <cropper-image
-                :url="user.avatarUrl?user.avatarUrl:''"
                 :fixedNumber="[1,1]"
+                :url="user.avatarUrl?user.avatarUrl:''"
                 @upload-img="handleUpload">
         </cropper-image>
     </el-dialog>
@@ -63,22 +63,22 @@
             width="300px">
         <el-row>
             <el-col class="grid-cell">
-                <el-input v-model="captchaVal.verifyCode" placeholder="请输入验证码"
-                          prefix-icon="Grid" class="verifyCode"></el-input>
-                <img v-bind:src="captchaVal.captchaImg" class="verifyCode_img" @click="getCaptcha" alt="你瞅啥">
+                <el-input class="verifyCode" placeholder="请输入验证码"
+                          prefix-icon="Grid" v-model="captchaVal.verifyCode"></el-input>
+                <img @click="getCaptcha" alt="你瞅啥" class="verifyCode_img" v-bind:src="captchaVal.captchaImg">
             </el-col>
         </el-row>
         <el-row>
             <el-col class="grid-cell">
-                <el-input v-model="mailCode" placeholder="请输入邮箱验证码"
-                          prefix-icon="Watermelon" class="mailCode"></el-input>
-                <el-button type="primary" class="email_button" @click="getEmailCode"
-                           :disabled="!captchaVal.verifyCode">获取邮箱验证码
+                <el-input class="mailCode" placeholder="请输入邮箱验证码"
+                          prefix-icon="Watermelon" v-model="mailCode"></el-input>
+                <el-button :disabled="!captchaVal.verifyCode" @click="getEmailCode" class="email_button"
+                           type="primary">获取邮箱验证码
                 </el-button>
             </el-col>
         </el-row>
-        <el-button type="primary" @click="updateUserInfo"
-                   :disabled="!mailCode">
+        <el-button :disabled="!mailCode" @click="updateUserInfo"
+                   type="primary">
             确定
         </el-button>
     </el-dialog>
@@ -164,7 +164,7 @@
     }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
     .user-info {
         padding-top: 40px;
     }

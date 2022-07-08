@@ -9,14 +9,14 @@
             </div>
             <h1 class="entry-title">
                 <router-link :to="`article/${blog.articleId}`">
-                    <span v-if="blog.isTop" style="color:#ff6d6d;font-weight:600">[置顶] </span>
+                    <span style="color:#ff6d6d;font-weight:600" v-if="blog.isTop">[置顶] </span>
                     {{blog.articleTitle}}
                 </router-link>
             </h1>
             <div class="p-time">
                 <i class="iconfont iconmeditor-time"></i>
                 {{this.$moment(blog.createTime).format('YYYY-MM-DD HH:mm:ss')}}
-                <i v-if="blog.isTop" class="iconfont iconfire" style="margin-left: 5px;color: #ff6d6d;"/>
+                <i class="iconfont iconfire" style="margin-left: 5px;color: #ff6d6d;" v-if="blog.isTop"/>
             </div>
             <p class="summary">{{blog.articleShort}}</p>
             <footer class="entry-footer">
@@ -52,7 +52,7 @@
     }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
     .post {
         margin: 0 0 4% 0;
         position: relative;
